@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Sree Ram Technologies"
+version = "1.0.0"
+id = "artifacts/srt-portal"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24358
+
+[services.development]
+run = "pnpm --filter @workspace/srt-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/srt-portal", "run", "build" ]
+publicDir = "artifacts/srt-portal/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24358"
+BASE_PATH = "/"

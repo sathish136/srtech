@@ -1,27 +1,36 @@
-# Workspace
+# Sree Ram Technologies — Business Management Portal
 
 ## Overview
-
-pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
+A complete internal business management web app for an Indian CCTV / biometrics / security systems / RF tower sales & service company. Modules: dashboard, customers, inventory (assets), installations, service tickets, invoicing, employees, and attendance. Brand: electric blue (#1FA9E6). Currency: INR (₹).
 
 ## Stack
+- **Monorepo:** pnpm workspace
+- **Frontend:** React + Vite + TypeScript + wouter + TanStack Query + shadcn/ui + recharts (artifact `srt-portal`, served at `/`)
+- **Backend:** Express 5 + Drizzle ORM + Zod validation (artifact `api-server`, served at `/api`)
+- **DB:** PostgreSQL (Replit-provisioned via `DATABASE_URL`)
+- **API contract:** OpenAPI 3 (`lib/api-spec/openapi.yaml`) → Orval codegen for TanStack Query hooks (`@workspace/api-client-react`) and Zod schemas (`@workspace/api-zod`)
 
-- **Monorepo tool**: pnpm workspaces
-- **Node.js version**: 24
-- **Package manager**: pnpm
-- **TypeScript version**: 5.9
-- **API framework**: Express 5
-- **Database**: PostgreSQL + Drizzle ORM
-- **Validation**: Zod (`zod/v4`), `drizzle-zod`
-- **API codegen**: Orval (from OpenAPI spec)
-- **Build**: esbuild (CJS bundle)
+## Key files
+- `lib/api-spec/openapi.yaml` — single source of truth for API contract
+- `lib/db/src/schema/` — Drizzle table definitions
+- `artifacts/api-server/src/routes/` — Express route handlers
+- `artifacts/api-server/src/lib/serializers.ts` — DB row → API response normalizers (numeric→Number, Date→ISO/YYYY-MM-DD)
+- `artifacts/api-server/src/seed.ts` — Sample data seeder
+- `artifacts/srt-portal/src/pages/` — All app pages
+- `artifacts/srt-portal/src/components/layout.tsx` — Sidebar shell
 
-## Key Commands
+## Data conventions
+- Numeric DB columns are stored as strings in pg-driver and converted to `Number` in serializers
+- Date columns expect `YYYY-MM-DD` strings on insert; helpers in `serializers.ts` (`toDateString`, `toDateStringRequired`) convert from Zod-parsed `Date` objects
+- Tickets auto-numbered `SRT-YYYY-####`; invoices `INV-YYYY-####`
+- Tickets: `resolvedAt` auto-set when status becomes `resolved`/`closed`, cleared when reopened
+- Attendance POST upserts on (`employeeId`, `date`)
 
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- `pnpm --filter @workspace/api-server run dev` — run API server locally
+## Workflows
+- `artifacts/api-server: API Server` — Express server
+- `artifacts/srt-portal: web` — Vite dev server
 
-See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+## Common tasks
+- Regenerate API client / Zod after editing `openapi.yaml`: `pnpm --filter @workspace/api-spec run codegen`
+- Push DB schema: `pnpm --filter @workspace/db run push`
+- Re-seed DB: `cd artifacts/api-server && node --import tsx/esm src/seed.ts`

@@ -3,20 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Sree Ram Technologies management system API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: dashboard
+  - name: customers
+  - name: assets
+  - name: installations
+  - name: tickets
+  - name: invoices
+  - name: employees
+  - name: attendance
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +30,1003 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Top-level KPI summary
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/revenue:
+    get:
+      operationId: getRevenueByMonth
+      tags: [dashboard]
+      summary: Monthly revenue for the last 12 months
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MonthlyRevenue"
+
+  /dashboard/ticket-status:
+    get:
+      operationId: getTicketStatusBreakdown
+      tags: [dashboard]
+      summary: Ticket counts grouped by status
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StatusCount"
+
+  /dashboard/asset-categories:
+    get:
+      operationId: getAssetCategoryBreakdown
+      tags: [dashboard]
+      summary: Inventory units grouped by category
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoryCount"
+
+  /dashboard/recent-activity:
+    get:
+      operationId: getRecentActivity
+      tags: [dashboard]
+      summary: Cross-entity recent activity feed
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /dashboard/low-stock:
+    get:
+      operationId: getLowStockAssets
+      tags: [dashboard]
+      summary: Assets at or below reorder threshold
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+
+  /customers:
+    get:
+      operationId: listCustomers
+      tags: [customers]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+    post:
+      operationId: createCustomer
+      tags: [customers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+
+  /customers/{id}:
+    get:
+      operationId: getCustomer
+      tags: [customers]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDetail"
+    patch:
+      operationId: updateCustomer
+      tags: [customers]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+    delete:
+      operationId: deleteCustomer
+      tags: [customers]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /assets:
+    get:
+      operationId: listAssets
+      tags: [assets]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+    post:
+      operationId: createAsset
+      tags: [assets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssetInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+
+  /assets/{id}:
+    get:
+      operationId: getAsset
+      tags: [assets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    patch:
+      operationId: updateAsset
+      tags: [assets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssetInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    delete:
+      operationId: deleteAsset
+      tags: [assets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /installations:
+    get:
+      operationId: listInstallations
+      tags: [installations]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Installation"
+    post:
+      operationId: createInstallation
+      tags: [installations]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstallationInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Installation"
+
+  /installations/{id}:
+    patch:
+      operationId: updateInstallation
+      tags: [installations]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstallationInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Installation"
+    delete:
+      operationId: deleteInstallation
+      tags: [installations]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /tickets:
+    get:
+      operationId: listTickets
+      tags: [tickets]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ticket"
+    post:
+      operationId: createTicket
+      tags: [tickets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+
+  /tickets/{id}:
+    get:
+      operationId: getTicket
+      tags: [tickets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+    patch:
+      operationId: updateTicket
+      tags: [tickets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+    delete:
+      operationId: deleteTicket
+      tags: [tickets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /invoices:
+    get:
+      operationId: listInvoices
+      tags: [invoices]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Invoice"
+    post:
+      operationId: createInvoice
+      tags: [invoices]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+
+  /invoices/{id}:
+    get:
+      operationId: getInvoice
+      tags: [invoices]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    patch:
+      operationId: updateInvoice
+      tags: [invoices]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    delete:
+      operationId: deleteInvoice
+      tags: [invoices]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /employees:
+    get:
+      operationId: listEmployees
+      tags: [employees]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+    post:
+      operationId: createEmployee
+      tags: [employees]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+
+  /employees/{id}:
+    get:
+      operationId: getEmployee
+      tags: [employees]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeDetail"
+    patch:
+      operationId: updateEmployee
+      tags: [employees]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+    delete:
+      operationId: deleteEmployee
+      tags: [employees]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /attendance:
+    get:
+      operationId: listAttendance
+      tags: [attendance]
+      parameters:
+        - in: query
+          name: date
+          required: false
+          schema: { type: string, format: date }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attendance"
+    post:
+      operationId: createAttendance
+      tags: [attendance]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AttendanceInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attendance"
+
+  /attendance/{id}:
+    patch:
+      operationId: updateAttendance
+      tags: [attendance]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AttendanceInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attendance"
+    delete:
+      operationId: deleteAttendance
+      tags: [attendance]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /attendance/today-summary:
+    get:
+      operationId: getTodayAttendanceSummary
+      tags: [attendance]
+      summary: Today's attendance summary
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttendanceSummary"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
+        status: { type: string }
+
+    DashboardSummary:
+      type: object
+      required:
+        - totalCustomers
+        - activeInstallations
+        - openTickets
+        - assetsInStock
+        - employeesTotal
+        - presentToday
+        - revenueThisMonth
+        - outstandingAmount
+      properties:
+        totalCustomers: { type: integer }
+        activeInstallations: { type: integer }
+        openTickets: { type: integer }
+        assetsInStock: { type: integer }
+        employeesTotal: { type: integer }
+        presentToday: { type: integer }
+        revenueThisMonth: { type: number }
+        outstandingAmount: { type: number }
+
+    MonthlyRevenue:
+      type: object
+      required: [month, revenue]
+      properties:
+        month: { type: string }
+        revenue: { type: number }
+
+    StatusCount:
+      type: object
+      required: [status, count]
+      properties:
+        status: { type: string }
+        count: { type: integer }
+
+    CategoryCount:
+      type: object
+      required: [category, count]
+      properties:
+        category: { type: string }
+        count: { type: integer }
+
+    ActivityItem:
+      type: object
+      required: [id, type, title, subtitle, timestamp]
+      properties:
+        id: { type: string }
+        type:
+          type: string
+          enum: [ticket, invoice, customer, installation, attendance]
+        title: { type: string }
+        subtitle: { type: string }
+        timestamp: { type: string, format: date-time }
+
+    Customer:
+      type: object
+      required: [id, name, contactPerson, phone, email, address, city, type, createdAt]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        contactPerson: { type: string }
+        phone: { type: string }
+        email: { type: string }
+        address: { type: string }
+        city: { type: string }
+        type:
+          type: string
+          enum: [residential, commercial, industrial, government]
+        notes: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    CustomerInput:
+      type: object
+      required: [name, contactPerson, phone, email, address, city, type]
+      properties:
+        name: { type: string, minLength: 1 }
+        contactPerson: { type: string, minLength: 1 }
+        phone: { type: string, minLength: 1 }
+        email: { type: string }
+        address: { type: string, minLength: 1 }
+        city: { type: string, minLength: 1 }
+        type:
+          type: string
+          enum: [residential, commercial, industrial, government]
+        notes: { type: string, nullable: true }
+
+    CustomerDetail:
+      allOf:
+        - $ref: "#/components/schemas/Customer"
+        - type: object
+          required: [installations, tickets, invoices]
+          properties:
+            installations:
+              type: array
+              items:
+                $ref: "#/components/schemas/Installation"
+            tickets:
+              type: array
+              items:
+                $ref: "#/components/schemas/Ticket"
+            invoices:
+              type: array
+              items:
+                $ref: "#/components/schemas/Invoice"
+
+    Asset:
+      type: object
+      required: [id, sku, name, category, brand, model, unitPrice, quantityInStock, reorderLevel, createdAt]
+      properties:
+        id: { type: integer }
+        sku: { type: string }
+        name: { type: string }
+        category:
+          type: string
+          enum: [cctv_camera, dvr_nvr, biometric, rf_tower, cable, accessory, alarm, intercom]
+        brand: { type: string }
+        model: { type: string }
+        unitPrice: { type: number }
+        quantityInStock: { type: integer }
+        reorderLevel: { type: integer }
+        warrantyMonths: { type: integer }
+        description: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    AssetInput:
+      type: object
+      required: [sku, name, category, brand, model, unitPrice, quantityInStock, reorderLevel, warrantyMonths]
+      properties:
+        sku: { type: string, minLength: 1 }
+        name: { type: string, minLength: 1 }
+        category:
+          type: string
+          enum: [cctv_camera, dvr_nvr, biometric, rf_tower, cable, accessory, alarm, intercom]
+        brand: { type: string, minLength: 1 }
+        model: { type: string, minLength: 1 }
+        unitPrice: { type: number, minimum: 0 }
+        quantityInStock: { type: integer, minimum: 0 }
+        reorderLevel: { type: integer, minimum: 0 }
+        warrantyMonths: { type: integer, minimum: 0 }
+        description: { type: string, nullable: true }
+
+    Installation:
+      type: object
+      required: [id, customerId, customerName, siteName, address, installedDate, status, totalCameras, amcExpiry, createdAt]
+      properties:
+        id: { type: integer }
+        customerId: { type: integer }
+        customerName: { type: string }
+        siteName: { type: string }
+        address: { type: string }
+        installedDate: { type: string, format: date }
         status:
           type: string
-      required:
-        - status
+          enum: [active, maintenance, decommissioned]
+        totalCameras: { type: integer }
+        amcExpiry: { type: string, format: date, nullable: true }
+        notes: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
 
+    InstallationInput:
+      type: object
+      required: [customerId, siteName, address, installedDate, status, totalCameras]
+      properties:
+        customerId: { type: integer }
+        siteName: { type: string, minLength: 1 }
+        address: { type: string, minLength: 1 }
+        installedDate: { type: string, format: date }
+        status:
+          type: string
+          enum: [active, maintenance, decommissioned]
+        totalCameras: { type: integer, minimum: 0 }
+        amcExpiry: { type: string, format: date, nullable: true }
+        notes: { type: string, nullable: true }
+
+    Ticket:
+      type: object
+      required: [id, ticketNumber, customerId, customerName, subject, description, priority, status, category, createdAt]
+      properties:
+        id: { type: integer }
+        ticketNumber: { type: string }
+        customerId: { type: integer }
+        customerName: { type: string }
+        subject: { type: string }
+        description: { type: string }
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+        status:
+          type: string
+          enum: [open, in_progress, on_hold, resolved, closed]
+        category:
+          type: string
+          enum: [installation, repair, amc, complaint, query, replacement]
+        assignedToId: { type: integer, nullable: true }
+        assignedToName: { type: string, nullable: true }
+        resolvedAt: { type: string, format: date-time, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    TicketInput:
+      type: object
+      required: [customerId, subject, description, priority, status, category]
+      properties:
+        customerId: { type: integer }
+        subject: { type: string, minLength: 1 }
+        description: { type: string, minLength: 1 }
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+        status:
+          type: string
+          enum: [open, in_progress, on_hold, resolved, closed]
+        category:
+          type: string
+          enum: [installation, repair, amc, complaint, query, replacement]
+        assignedToId: { type: integer, nullable: true }
+
+    Invoice:
+      type: object
+      required: [id, invoiceNumber, customerId, customerName, issueDate, dueDate, status, subtotal, tax, total, createdAt]
+      properties:
+        id: { type: integer }
+        invoiceNumber: { type: string }
+        customerId: { type: integer }
+        customerName: { type: string }
+        issueDate: { type: string, format: date }
+        dueDate: { type: string, format: date }
+        status:
+          type: string
+          enum: [draft, sent, paid, overdue, cancelled]
+        subtotal: { type: number }
+        tax: { type: number }
+        total: { type: number }
+        notes: { type: string, nullable: true }
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvoiceItem"
+        createdAt: { type: string, format: date-time }
+
+    InvoiceItem:
+      type: object
+      required: [description, quantity, unitPrice, amount]
+      properties:
+        description: { type: string }
+        quantity: { type: integer }
+        unitPrice: { type: number }
+        amount: { type: number }
+
+    InvoiceInput:
+      type: object
+      required: [customerId, issueDate, dueDate, status, subtotal, tax, total, items]
+      properties:
+        customerId: { type: integer }
+        issueDate: { type: string, format: date }
+        dueDate: { type: string, format: date }
+        status:
+          type: string
+          enum: [draft, sent, paid, overdue, cancelled]
+        subtotal: { type: number, minimum: 0 }
+        tax: { type: number, minimum: 0 }
+        total: { type: number, minimum: 0 }
+        notes: { type: string, nullable: true }
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvoiceItem"
+
+    Employee:
+      type: object
+      required: [id, employeeCode, name, role, department, phone, email, joinDate, status, salary, createdAt]
+      properties:
+        id: { type: integer }
+        employeeCode: { type: string }
+        name: { type: string }
+        role:
+          type: string
+          enum: [technician, sales, manager, admin, support, installer]
+        department: { type: string }
+        phone: { type: string }
+        email: { type: string }
+        joinDate: { type: string, format: date }
+        status:
+          type: string
+          enum: [active, on_leave, inactive]
+        salary: { type: number }
+        address: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    EmployeeInput:
+      type: object
+      required: [employeeCode, name, role, department, phone, email, joinDate, status, salary]
+      properties:
+        employeeCode: { type: string, minLength: 1 }
+        name: { type: string, minLength: 1 }
+        role:
+          type: string
+          enum: [technician, sales, manager, admin, support, installer]
+        department: { type: string, minLength: 1 }
+        phone: { type: string, minLength: 1 }
+        email: { type: string }
+        joinDate: { type: string, format: date }
+        status:
+          type: string
+          enum: [active, on_leave, inactive]
+        salary: { type: number, minimum: 0 }
+        address: { type: string, nullable: true }
+
+    EmployeeDetail:
+      allOf:
+        - $ref: "#/components/schemas/Employee"
+        - type: object
+          required: [recentAttendance, assignedTickets]
+          properties:
+            recentAttendance:
+              type: array
+              items:
+                $ref: "#/components/schemas/Attendance"
+            assignedTickets:
+              type: array
+              items:
+                $ref: "#/components/schemas/Ticket"
+
+    Attendance:
+      type: object
+      required: [id, employeeId, employeeName, date, status, createdAt]
+      properties:
+        id: { type: integer }
+        employeeId: { type: integer }
+        employeeName: { type: string }
+        date: { type: string, format: date }
+        checkIn: { type: string, nullable: true }
+        checkOut: { type: string, nullable: true }
+        status:
+          type: string
+          enum: [present, absent, half_day, on_leave, late]
+        notes: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    AttendanceInput:
+      type: object
+      required: [employeeId, date, status]
+      properties:
+        employeeId: { type: integer }
+        date: { type: string, format: date }
+        checkIn: { type: string, nullable: true }
+        checkOut: { type: string, nullable: true }
+        status:
+          type: string
+          enum: [present, absent, half_day, on_leave, late]
+        notes: { type: string, nullable: true }
+
+    AttendanceSummary:
+      type: object
+      required: [date, present, absent, onLeave, halfDay, late, total]
+      properties:
+        date: { type: string, format: date }
+        present: { type: integer }
+        absent: { type: integer }
+        onLeave: { type: integer }
+        halfDay: { type: integer }
+        late: { type: integer }
+        total: { type: integer }
