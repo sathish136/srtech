@@ -70,13 +70,13 @@ export default function Dashboard() {
           />
           <KpiCard 
             title="Revenue This Month" 
-            value={summary ? `₹${summary.revenueThisMonth.toLocaleString()}` : undefined} 
+            value={summary ? `₹${(summary.revenueThisMonth ?? 0).toLocaleString()}` : undefined} 
             icon={<IndianRupee className="h-4 w-4 text-primary" />} 
             loading={isLoadingSummary} 
           />
           <KpiCard 
             title="Outstanding Amount" 
-            value={summary ? `₹${summary.outstandingAmount.toLocaleString()}` : undefined} 
+            value={summary ? `₹${(summary.outstandingAmount ?? 0).toLocaleString()}` : undefined} 
             icon={<CreditCard className="h-4 w-4 text-orange-500" />} 
             loading={isLoadingSummary} 
           />
