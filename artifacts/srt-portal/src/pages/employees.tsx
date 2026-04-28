@@ -1,12 +1,13 @@
 import { Layout } from "@/components/layout";
+import { PageHeader } from "@/components/page-header";
+import { DataToolbar } from "@/components/data-toolbar";
 import { useListEmployees } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
-import { Plus, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Plus, UserCircle } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
 
 export default function Employees() {
   const { data: employees, isLoading } = useListEmployees();
@@ -14,66 +15,77 @@ export default function Employees() {
   return (
     <Layout>
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Employees</h2>
-            <p className="text-muted-foreground">Manage your staff, technicians, and their roles.</p>
-          </div>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> Add Employee
-          </Button>
-        </div>
+        <PageHeader
+          icon={UserCircle}
+          title="Employees"
+          description="Manage your staff, technicians, and their roles."
+          accentClassName="from-indigo-500 to-blue-700"
+          actions={
+            <Button>
+              <Plus className="h-4 w-4" /> Add Employee
+            </Button>
+          }
+        />
 
-        <div className="flex items-center gap-2 max-w-sm">
-          <div className="relative w-full">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input type="search" placeholder="Search employees..." className="w-full pl-8" />
-          </div>
-        </div>
+        <DataToolbar placeholder="Search employees…" />
 
-        <div className="border rounded-md bg-card">
+        <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Code</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Status</TableHead>
+              <TableRow className="bg-muted/40 hover:bg-muted/40">
+                <TableHead className="h-11 px-4 text-xs uppercase tracking-wider">Code</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Name</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Role</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Department</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
-                [1, 2, 3, 4, 5].map(i => (
+                [1, 2, 3, 4, 5].map((i) => (
                   <TableRow key={i}>
-                    <TableCell><Skeleton className="h-5 w-16" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>
+                    <TableCell className="px-4 py-3"><Skeleton className="h-5 w-16" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-32" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-24" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-24" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-20" /></TableCell>
                   </TableRow>
                 ))
               ) : employees?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={5} className="py-12 text-center text-muted-foreground">
                     No employees found.
                   </TableCell>
                 </TableRow>
               ) : (
-                employees?.map(employee => (
-                  <TableRow key={employee.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
-                    <TableCell className="font-mono text-sm">{employee.employeeCode}</TableCell>
-                    <TableCell className="font-medium">
-                      <Link href={`/employees/${employee.id}`} className="hover:underline">
-                        {employee.name}
+                employees?.map((employee) => (
+                  <TableRow key={employee.id} className="cursor-pointer transition-colors hover:bg-muted/40">
+                    <TableCell className="px-4 py-3 font-mono text-sm text-muted-foreground">
+                      {employee.employeeCode}
+                    </TableCell>
+                    <TableCell className="py-3 font-medium">
+                      <Link href={`/employees/${employee.id}`}>
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-blue-700/15 text-xs font-semibold text-indigo-700">
+                            {employee.name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase()}
+                          </div>
+                          <span className="hover:underline">{employee.name}</span>
+                        </div>
                       </Link>
                     </TableCell>
-                    <TableCell className="capitalize">{employee.role}</TableCell>
-                    <TableCell>{employee.department}</TableCell>
-                    <TableCell>
-                      <Badge variant={employee.status === 'active' ? "default" : "secondary"} className="capitalize">
-                        {employee.status.replace('_', ' ')}
-                      </Badge>
+                    <TableCell className="py-3 capitalize">{employee.role}</TableCell>
+                    <TableCell className="py-3">{employee.department}</TableCell>
+                    <TableCell className="py-3">
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
+                          employee.status === "active"
+                            ? "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20"
+                            : "bg-slate-500/10 text-slate-600 ring-1 ring-slate-500/20"
+                        )}
+                      >
+                        {employee.status.replace("_", " ")}
+                      </span>
                     </TableCell>
                   </TableRow>
                 ))

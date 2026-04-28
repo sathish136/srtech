@@ -1,118 +1,111 @@
 import { Layout } from "@/components/layout";
+import { PageHeader } from "@/components/page-header";
+import { KpiCard } from "@/components/kpi-card";
 import { useListAttendance, useGetTodayAttendanceSummary } from "@workspace/api-client-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
+import {
+  CalendarClock,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Plane,
+  CircleDashed,
+  Users,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const STATUS_STYLES: Record<string, string> = {
+  present: "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20",
+  absent: "bg-rose-500/10 text-rose-700 ring-1 ring-rose-500/20",
+  late: "bg-orange-500/10 text-orange-700 ring-1 ring-orange-500/20",
+  on_leave: "bg-blue-500/10 text-blue-700 ring-1 ring-blue-500/20",
+  half_day: "bg-violet-500/10 text-violet-700 ring-1 ring-violet-500/20",
+};
 
 export default function Attendance() {
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = format(new Date(), "yyyy-MM-dd");
   const { data: summary, isLoading: isLoadingSummary } = useGetTodayAttendanceSummary();
   const { data: attendance, isLoading: isLoadingAttendance } = useListAttendance({ date: today });
 
   return (
     <Layout>
       <div className="flex flex-col gap-6">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">Attendance Log</h2>
-          <p className="text-muted-foreground">Track employee presence and time for {format(new Date(), 'dd MMM yyyy')}.</p>
+        <PageHeader
+          icon={CalendarClock}
+          title="Attendance Log"
+          description={`Track employee presence and time for ${format(new Date(), "dd MMM yyyy")}.`}
+          accentClassName="from-amber-500 to-orange-600"
+        />
+
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          <KpiCard title="Present" value={summary?.present} icon={CheckCircle} accent="emerald" loading={isLoadingSummary} />
+          <KpiCard title="Absent" value={summary?.absent} icon={XCircle} accent="rose" loading={isLoadingSummary} />
+          <KpiCard title="Late" value={summary?.late} icon={Clock} accent="orange" loading={isLoadingSummary} />
+          <KpiCard title="On Leave" value={summary?.onLeave} icon={Plane} accent="blue" loading={isLoadingSummary} />
+          <KpiCard title="Half Day" value={summary?.halfDay} icon={CircleDashed} accent="violet" loading={isLoadingSummary} />
+          <KpiCard title="Total" value={summary?.total} icon={Users} accent="indigo" loading={isLoadingSummary} />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Present</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600">{isLoadingSummary ? '-' : summary?.present}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Absent</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-destructive">{isLoadingSummary ? '-' : summary?.absent}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Late</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-500">{isLoadingSummary ? '-' : summary?.late}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">On Leave</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-500">{isLoadingSummary ? '-' : summary?.onLeave}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Half Day</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-purple-500">{isLoadingSummary ? '-' : summary?.halfDay}</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-primary/5">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Total</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-primary">{isLoadingSummary ? '-' : summary?.total}</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="border rounded-md bg-card mt-4">
+        <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Employee</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Check In</TableHead>
-                <TableHead>Check Out</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Notes</TableHead>
+              <TableRow className="bg-muted/40 hover:bg-muted/40">
+                <TableHead className="h-11 px-4 text-xs uppercase tracking-wider">Employee</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Date</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Check In</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Check Out</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Status</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Notes</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoadingAttendance ? (
-                [1, 2, 3, 4].map(i => (
+                [1, 2, 3, 4].map((i) => (
                   <TableRow key={i}>
-                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                    <TableCell className="px-4 py-3"><Skeleton className="h-5 w-32" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-24" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-20" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-20" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-20" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-32" /></TableCell>
                   </TableRow>
                 ))
               ) : attendance?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={6} className="py-12 text-center text-muted-foreground">
                     No attendance records found for today.
                   </TableCell>
                 </TableRow>
               ) : (
-                attendance?.map(record => (
+                attendance?.map((record) => (
                   <TableRow key={record.id}>
-                    <TableCell className="font-medium">{record.employeeName}</TableCell>
-                    <TableCell>{format(new Date(record.date), 'dd MMM yyyy')}</TableCell>
-                    <TableCell>{record.checkIn ? format(new Date(`2000-01-01T${record.checkIn}`), 'hh:mm a') : '-'}</TableCell>
-                    <TableCell>{record.checkOut ? format(new Date(`2000-01-01T${record.checkOut}`), 'hh:mm a') : '-'}</TableCell>
-                    <TableCell>
-                      <Badge variant={record.status === 'present' ? 'default' : record.status === 'absent' ? 'destructive' : 'secondary'} className="capitalize">
-                        {record.status.replace('_', ' ')}
-                      </Badge>
+                    <TableCell className="px-4 py-3 font-medium">{record.employeeName}</TableCell>
+                    <TableCell className="py-3 text-muted-foreground">
+                      {format(new Date(record.date), "dd MMM yyyy")}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{record.notes || '-'}</TableCell>
+                    <TableCell className="py-3 font-mono text-sm">
+                      {record.checkIn
+                        ? format(new Date(`2000-01-01T${record.checkIn}`), "hh:mm a")
+                        : "—"}
+                    </TableCell>
+                    <TableCell className="py-3 font-mono text-sm">
+                      {record.checkOut
+                        ? format(new Date(`2000-01-01T${record.checkOut}`), "hh:mm a")
+                        : "—"}
+                    </TableCell>
+                    <TableCell className="py-3">
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
+                          STATUS_STYLES[record.status] ?? "bg-muted text-muted-foreground"
+                        )}
+                      >
+                        {record.status.replace("_", " ")}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-3 text-muted-foreground">{record.notes || "—"}</TableCell>
                   </TableRow>
                 ))
               )}

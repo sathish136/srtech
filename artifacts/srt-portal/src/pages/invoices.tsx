@@ -1,13 +1,22 @@
 import { Layout } from "@/components/layout";
+import { PageHeader } from "@/components/page-header";
+import { DataToolbar } from "@/components/data-toolbar";
 import { useListInvoices } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
-import { Plus, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Plus, FileText } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
+
+const STATUS_STYLES: Record<string, string> = {
+  paid: "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20",
+  overdue: "bg-rose-500/10 text-rose-700 ring-1 ring-rose-500/20",
+  pending: "bg-amber-500/10 text-amber-700 ring-1 ring-amber-500/20",
+  draft: "bg-slate-500/10 text-slate-600 ring-1 ring-slate-500/20",
+  partial: "bg-blue-500/10 text-blue-700 ring-1 ring-blue-500/20",
+};
 
 export default function Invoices() {
   const { data: invoices, isLoading } = useListInvoices();
@@ -15,71 +24,80 @@ export default function Invoices() {
   return (
     <Layout>
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Invoices</h2>
-            <p className="text-muted-foreground">Manage billing and payments.</p>
-          </div>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> Create Invoice
-          </Button>
-        </div>
+        <PageHeader
+          icon={FileText}
+          title="Invoices"
+          description="Manage billing and payments."
+          accentClassName="from-emerald-500 to-teal-600"
+          actions={
+            <Button>
+              <Plus className="h-4 w-4" /> Create Invoice
+            </Button>
+          }
+        />
 
-        <div className="flex items-center gap-2 max-w-sm">
-          <div className="relative w-full">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input type="search" placeholder="Search invoices..." className="w-full pl-8" />
-          </div>
-        </div>
+        <DataToolbar placeholder="Search invoices…" />
 
-        <div className="border rounded-md bg-card">
+        <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Invoice #</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Issue Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Total</TableHead>
+              <TableRow className="bg-muted/40 hover:bg-muted/40">
+                <TableHead className="h-11 px-4 text-xs uppercase tracking-wider">Invoice #</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Customer</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Issue Date</TableHead>
+                <TableHead className="h-11 text-xs uppercase tracking-wider">Status</TableHead>
+                <TableHead className="h-11 pr-4 text-right text-xs uppercase tracking-wider">Total</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
-                [1, 2, 3, 4, 5].map(i => (
+                [1, 2, 3, 4, 5].map((i) => (
                   <TableRow key={i}>
-                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>
-                    <TableCell className="text-right"><Skeleton className="h-5 w-20 ml-auto" /></TableCell>
+                    <TableCell className="px-4 py-3"><Skeleton className="h-5 w-20" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-32" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-24" /></TableCell>
+                    <TableCell className="py-3"><Skeleton className="h-5 w-20" /></TableCell>
+                    <TableCell className="py-3 pr-4 text-right"><Skeleton className="ml-auto h-5 w-20" /></TableCell>
                   </TableRow>
                 ))
               ) : invoices?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={5} className="py-12 text-center text-muted-foreground">
                     No invoices found.
                   </TableCell>
                 </TableRow>
               ) : (
-                invoices?.map(invoice => (
-                  <TableRow key={invoice.id} className="cursor-pointer hover:bg-muted/50 transition-colors">
-                    <TableCell className="font-mono text-sm">
-                      <Link href={`/invoices/${invoice.id}`} className="hover:underline text-primary">
+                invoices?.map((invoice) => (
+                  <TableRow key={invoice.id} className="cursor-pointer transition-colors hover:bg-muted/40">
+                    <TableCell className="px-4 py-3 font-mono text-sm">
+                      <Link
+                        href={`/invoices/${invoice.id}`}
+                        className="font-semibold text-primary hover:underline"
+                      >
                         {invoice.invoiceNumber}
                       </Link>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="py-3">
                       <Link href={`/customers/${invoice.customerId}`} className="hover:underline">
                         {invoice.customerName}
                       </Link>
                     </TableCell>
-                    <TableCell>{format(new Date(invoice.issueDate), 'dd MMM yyyy')}</TableCell>
-                    <TableCell>
-                      <Badge variant={invoice.status === 'paid' ? 'default' : invoice.status === 'overdue' ? 'destructive' : 'secondary'} className="capitalize">
-                        {invoice.status}
-                      </Badge>
+                    <TableCell className="py-3 text-muted-foreground">
+                      {format(new Date(invoice.issueDate), "dd MMM yyyy")}
                     </TableCell>
-                    <TableCell className="text-right font-medium">₹{invoice.total.toLocaleString()}</TableCell>
+                    <TableCell className="py-3">
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
+                          STATUS_STYLES[invoice.status] ?? "bg-muted text-muted-foreground"
+                        )}
+                      >
+                        {invoice.status}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-3 pr-4 text-right font-semibold">
+                      ₹{invoice.total.toLocaleString()}
+                    </TableCell>
                   </TableRow>
                 ))
               )}
