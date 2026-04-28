@@ -98,7 +98,7 @@ export default function LeadDetail() {
   return (
     <Layout>
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
-        <Link href="/leads">
+        <Link href="/portal/leads">
           <Button variant="ghost" size="sm" className="-ml-2 w-fit">
             <ArrowLeft className="h-4 w-4" /> Back to Leads
           </Button>

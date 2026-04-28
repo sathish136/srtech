@@ -115,14 +115,14 @@ export default function Invoices() {
                   <TableRow key={invoice.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                     <TableCell className="px-4 py-3 font-mono text-sm">
                       <Link
-                        href={`/invoices/${invoice.id}`}
+                        href={`/portal/invoices/${invoice.id}`}
                         className="font-semibold text-primary hover:underline"
                       >
                         {invoice.invoiceNumber}
                       </Link>
                     </TableCell>
                     <TableCell className="py-3">
-                      <Link href={`/customers/${invoice.customerId}`} className="hover:underline">
+                      <Link href={`/portal/customers/${invoice.customerId}`} className="hover:underline">
                         {invoice.customerName}
                       </Link>
                     </TableCell>

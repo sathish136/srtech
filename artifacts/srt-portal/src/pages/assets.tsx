@@ -118,10 +118,10 @@ export default function Assets() {
                   return (
                     <TableRow key={asset.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                       <TableCell className="px-4 py-3 font-mono text-sm text-muted-foreground">
-                        <Link href={`/assets/${asset.id}`} className="hover:underline">{asset.sku}</Link>
+                        <Link href={`/portal/assets/${asset.id}`} className="hover:underline">{asset.sku}</Link>
                       </TableCell>
                       <TableCell className="py-3 font-medium">
-                        <Link href={`/assets/${asset.id}`} className="text-primary hover:underline">
+                        <Link href={`/portal/assets/${asset.id}`} className="text-primary hover:underline">
                           {asset.name}
                         </Link>
                       </TableCell>

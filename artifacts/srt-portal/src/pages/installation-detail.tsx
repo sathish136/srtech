@@ -73,7 +73,7 @@ export default function InstallationDetail() {
   return (
     <Layout>
       <div className="flex flex-col gap-6">
-        <Link href="/installations" className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+        <Link href="/portal/installations" className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> Back to Installations
         </Link>
 
@@ -85,7 +85,7 @@ export default function InstallationDetail() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold">{inst.siteName}</h1>
-                <Link href={`/customers/${inst.customerId}`} className="mt-1 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary hover:underline">
+                <Link href={`/portal/customers/${inst.customerId}`} className="mt-1 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary hover:underline">
                   <User className="h-3.5 w-3.5" /> {inst.customerName}
                 </Link>
               </div>

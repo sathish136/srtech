@@ -147,7 +147,7 @@ export default function Tickets() {
                   <TableRow key={ticket.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                     <TableCell className="px-4 py-3 font-mono text-sm">
                       <Link
-                        href={`/tickets/${ticket.id}`}
+                        href={`/portal/tickets/${ticket.id}`}
                         className="font-semibold text-primary hover:underline"
                       >
                         {ticket.ticketNumber}
@@ -157,12 +157,12 @@ export default function Tickets() {
                       className="py-3 max-w-[240px] truncate font-medium"
                       title={ticket.subject}
                     >
-                      <Link href={`/tickets/${ticket.id}`} className="hover:underline">
+                      <Link href={`/portal/tickets/${ticket.id}`} className="hover:underline">
                         {ticket.subject}
                       </Link>
                     </TableCell>
                     <TableCell className="py-3">
-                      <Link href={`/customers/${ticket.customerId}`} className="hover:underline">
+                      <Link href={`/portal/customers/${ticket.customerId}`} className="hover:underline">
                         {ticket.customerName}
                       </Link>
                     </TableCell>

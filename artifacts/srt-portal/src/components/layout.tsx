@@ -24,22 +24,22 @@ import { cn } from "@/lib/utils";
 type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
 
 const navItems: NavItem[] = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/leads", label: "Leads / CRM", icon: Target },
-  { href: "/customers", label: "Customers", icon: Users },
-  { href: "/installations", label: "Installations", icon: Wrench },
-  { href: "/tickets", label: "Tickets", icon: ClipboardList },
-  { href: "/assets", label: "Inventory", icon: Package },
-  { href: "/invoices", label: "Invoices", icon: FileText },
-  { href: "/employees", label: "Employees", icon: UserCircle },
-  { href: "/attendance", label: "Attendance", icon: CalendarClock },
+  { href: "/portal", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/portal/leads", label: "Leads / CRM", icon: Target },
+  { href: "/portal/customers", label: "Customers", icon: Users },
+  { href: "/portal/installations", label: "Installations", icon: Wrench },
+  { href: "/portal/tickets", label: "Tickets", icon: ClipboardList },
+  { href: "/portal/assets", label: "Inventory", icon: Package },
+  { href: "/portal/invoices", label: "Invoices", icon: FileText },
+  { href: "/portal/employees", label: "Employees", icon: UserCircle },
+  { href: "/portal/attendance", label: "Attendance", icon: CalendarClock },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
 
   const isItemActive = (href: string) =>
-    location === href || (href !== "/" && location.startsWith(href));
+    location === href || location.startsWith(href + "/");
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background">
@@ -82,7 +82,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </Sheet>
 
           {/* Brand */}
-          <Link href="/">
+          <Link href="/portal">
             <div className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
               <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-md bg-primary/10">
                 <img

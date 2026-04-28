@@ -121,7 +121,7 @@ export default function TicketDetail() {
   return (
     <Layout>
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
-        <Link href="/tickets">
+        <Link href="/portal/tickets">
           <Button variant="ghost" size="sm" className="-ml-2 w-fit">
             <ArrowLeft className="h-4 w-4" /> Back to Tickets
           </Button>
@@ -139,7 +139,7 @@ export default function TicketDetail() {
                 <p className="mt-1 text-sm text-muted-foreground">
                   Opened {format(new Date(ticket.createdAt), "dd MMM yyyy")} for{" "}
                   <Link
-                    href={`/customers/${ticket.customerId}`}
+                    href={`/portal/customers/${ticket.customerId}`}
                     className="font-medium text-foreground hover:underline"
                   >
                     {ticket.customerName}
@@ -266,7 +266,7 @@ export default function TicketDetail() {
             {ticket.assignedToName || <span className="text-muted-foreground">Unassigned</span>}
           </InfoRow>
           <InfoRow icon={User} label="Customer">
-            <Link href={`/customers/${ticket.customerId}`} className="hover:underline">
+            <Link href={`/portal/customers/${ticket.customerId}`} className="hover:underline">
               {ticket.customerName}
             </Link>
           </InfoRow>

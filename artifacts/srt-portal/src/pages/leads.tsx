@@ -356,14 +356,14 @@ export default function Leads() {
                   <TableRow key={l.id} className="cursor-pointer hover:bg-muted/40">
                     <TableCell className="px-4 py-3 font-mono text-sm">
                       <Link
-                        href={`/leads/${l.id}`}
+                        href={`/portal/leads/${l.id}`}
                         className="font-semibold text-primary hover:underline"
                       >
                         {l.leadNumber}
                       </Link>
                     </TableCell>
                     <TableCell className="py-3 font-medium">
-                      <Link href={`/leads/${l.id}`} className="hover:underline">
+                      <Link href={`/portal/leads/${l.id}`} className="hover:underline">
                         {l.name}
                       </Link>
                       <p className="text-xs text-muted-foreground">{l.city}</p>

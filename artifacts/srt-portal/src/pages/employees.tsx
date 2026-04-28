@@ -117,7 +117,7 @@ export default function Employees() {
                       {employee.employeeCode}
                     </TableCell>
                     <TableCell className="py-3 font-medium">
-                      <Link href={`/employees/${employee.id}`}>
+                      <Link href={`/portal/employees/${employee.id}`}>
                         <div className="flex items-center gap-3">
                           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                             {employee.name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase()}

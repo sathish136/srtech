@@ -125,12 +125,12 @@ export default function Installations() {
                   return (
                     <TableRow key={inst.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                       <TableCell className="px-4 py-3 font-medium">
-                        <Link href={`/installations/${inst.id}`} className="text-primary hover:underline">
+                        <Link href={`/portal/installations/${inst.id}`} className="text-primary hover:underline">
                           {inst.siteName}
                         </Link>
                       </TableCell>
                       <TableCell className="py-3">
-                        <Link href={`/customers/${inst.customerId}`} className="hover:underline">
+                        <Link href={`/portal/customers/${inst.customerId}`} className="hover:underline">
                           {inst.customerName}
                         </Link>
                       </TableCell>

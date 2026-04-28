@@ -1,7 +1,11 @@
 # Sree Ram Technologies — Business Management Portal
 
 ## Overview
-A complete internal business management web app for an Indian CCTV / biometrics / security systems / RF tower sales & service company. Modules: dashboard, customers, inventory (assets), installations, service tickets, invoicing, employees, and attendance. Brand: electric blue (#1FA9E6). Currency: INR (₹).
+Two surfaces in one artifact (`srt-portal`):
+1. **Public marketing website** at `/` — hero, services, products, about, contact pages. Inspired by liveu.lk style. Uses `MarketingLayout`. Includes "Open Web App" CTAs that link to `/portal`.
+2. **Internal ERP / business management portal** at `/portal` (was `/`) — dashboard, customers, inventory (assets), installations, service tickets, invoicing, employees, attendance, leads/CRM. Uses `Layout`.
+
+Indian CCTV / biometrics / security systems / RF tower sales & service company. Brand: electric blue (#1FA9E6). Currency: INR (₹).
 
 ## Stack
 - **Monorepo:** pnpm workspace
@@ -16,8 +20,9 @@ A complete internal business management web app for an Indian CCTV / biometrics 
 - `artifacts/api-server/src/routes/` — Express route handlers
 - `artifacts/api-server/src/lib/serializers.ts` — DB row → API response normalizers (numeric→Number, Date→ISO/YYYY-MM-DD)
 - `artifacts/api-server/src/seed.ts` — Sample data seeder
-- `artifacts/srt-portal/src/pages/` — All app pages
-- `artifacts/srt-portal/src/components/layout.tsx` — Top-bar shell (brand row + horizontal nav with all modules; flat / no gradients). Nav items: Dashboard, Leads/CRM, Customers, Installations, Tickets, Inventory, Invoices, Employees, Attendance.
+- `artifacts/srt-portal/src/pages/` — All app pages, including marketing pages (`marketing-home.tsx`, `marketing-about.tsx`, `marketing-services.tsx`, `marketing-products.tsx`, `marketing-contact.tsx`)
+- `artifacts/srt-portal/src/components/layout.tsx` — Internal portal shell (top-bar brand row + horizontal nav). All nav items prefixed with `/portal/...`. Nav items: Dashboard, Leads/CRM, Customers, Installations, Tickets, Inventory, Invoices, Employees, Attendance.
+- `artifacts/srt-portal/src/components/marketing-layout.tsx` — Public website shell (utility bar, sticky header with nav + "Open Web App" button, dark footer with company info, social links and links back to portal).
 - `artifacts/srt-portal/src/components/page-header.tsx`, `kpi-card.tsx`, `data-toolbar.tsx` — Reusable UI primitives (flat solid-tint icon tiles, no gradients)
 - `artifacts/srt-portal/src/components/followups-timeline.tsx` — Reusable activity timeline + add-follow-up form (used by ticket-detail and lead-detail). Uses TanStack Query directly via `lib/api.ts`.
 - `artifacts/srt-portal/src/lib/api.ts` — Lightweight inline fetch client for endpoints not in the OpenAPI/codegen pipeline (currently leads + followups).

@@ -71,7 +71,7 @@ export default function AssetDetail() {
   return (
     <Layout>
       <div className="flex flex-col gap-6">
-        <Link href="/assets" className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+        <Link href="/portal/assets" className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> Back to Inventory
         </Link>
 

@@ -21,27 +21,42 @@ import Attendance from "@/pages/attendance";
 import Leads from "@/pages/leads";
 import LeadDetail from "@/pages/lead-detail";
 
+import MarketingHome from "@/pages/marketing-home";
+import MarketingAbout from "@/pages/marketing-about";
+import MarketingServices from "@/pages/marketing-services";
+import MarketingProducts from "@/pages/marketing-products";
+import MarketingContact from "@/pages/marketing-contact";
+
 const queryClient = new QueryClient();
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
-      <Route path="/customers" component={Customers} />
-      <Route path="/customers/:id" component={CustomerDetail} />
-      <Route path="/assets" component={Assets} />
-      <Route path="/assets/:id" component={AssetDetail} />
-      <Route path="/installations" component={Installations} />
-      <Route path="/installations/:id" component={InstallationDetail} />
-      <Route path="/tickets" component={Tickets} />
-      <Route path="/tickets/:id" component={TicketDetail} />
-      <Route path="/invoices" component={Invoices} />
-      <Route path="/invoices/:id" component={InvoiceDetail} />
-      <Route path="/employees" component={Employees} />
-      <Route path="/employees/:id" component={EmployeeDetail} />
-      <Route path="/attendance" component={Attendance} />
-      <Route path="/leads" component={Leads} />
-      <Route path="/leads/:id" component={LeadDetail} />
+      {/* Public marketing site */}
+      <Route path="/" component={MarketingHome} />
+      <Route path="/about" component={MarketingAbout} />
+      <Route path="/services" component={MarketingServices} />
+      <Route path="/products" component={MarketingProducts} />
+      <Route path="/contact" component={MarketingContact} />
+
+      {/* Internal portal (web app / ERP) */}
+      <Route path="/portal" component={Dashboard} />
+      <Route path="/portal/customers" component={Customers} />
+      <Route path="/portal/customers/:id" component={CustomerDetail} />
+      <Route path="/portal/assets" component={Assets} />
+      <Route path="/portal/assets/:id" component={AssetDetail} />
+      <Route path="/portal/installations" component={Installations} />
+      <Route path="/portal/installations/:id" component={InstallationDetail} />
+      <Route path="/portal/tickets" component={Tickets} />
+      <Route path="/portal/tickets/:id" component={TicketDetail} />
+      <Route path="/portal/invoices" component={Invoices} />
+      <Route path="/portal/invoices/:id" component={InvoiceDetail} />
+      <Route path="/portal/employees" component={Employees} />
+      <Route path="/portal/employees/:id" component={EmployeeDetail} />
+      <Route path="/portal/attendance" component={Attendance} />
+      <Route path="/portal/leads" component={Leads} />
+      <Route path="/portal/leads/:id" component={LeadDetail} />
+
       <Route component={NotFound} />
     </Switch>
   );

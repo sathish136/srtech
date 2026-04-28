@@ -103,7 +103,7 @@ export default function Customers() {
                 filtered.map((customer) => (
                   <TableRow key={customer.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                     <TableCell className="px-4 py-3 font-medium">
-                      <Link href={`/customers/${customer.id}`}>
+                      <Link href={`/portal/customers/${customer.id}`}>
                         <div className="flex items-center gap-3">
                           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                             {customer.name.slice(0, 2).toUpperCase()}
