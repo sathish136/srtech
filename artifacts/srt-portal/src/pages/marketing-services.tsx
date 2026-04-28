@@ -113,7 +113,7 @@ export default function MarketingServices() {
       <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
         <div className="absolute inset-0 opacity-25">
           <img src={`${BASE}images/control-room.jpg`} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/85 to-slate-950" />
+          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 text-center">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Our Services</p>
@@ -138,13 +138,12 @@ export default function MarketingServices() {
                 className={`grid items-center gap-10 md:grid-cols-2 md:gap-16`}
               >
                 <div className={`relative ${reversed ? "md:order-2" : ""}`}>
-                  <div className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-primary/20 to-sky-300/10 blur-2xl" />
                   <img
                     src={s.image}
                     alt={s.title}
-                    className="aspect-[4/3] w-full rounded-3xl object-cover shadow-2xl"
+                    className="aspect-[4/3] w-full rounded-2xl object-cover ring-1 ring-slate-200"
                   />
-                  <div className={`absolute ${reversed ? "-right-6" : "-left-6"} -bottom-6 hidden h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-sky-600 text-white shadow-2xl md:flex`}>
+                  <div className={`absolute ${reversed ? "-right-6" : "-left-6"} -bottom-6 hidden h-24 w-24 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-xl md:flex`}>
                     <s.icon className="h-11 w-11" />
                   </div>
                 </div>
@@ -170,7 +169,7 @@ export default function MarketingServices() {
                   </ul>
 
                   <Link href="/contact">
-                    <button className="mt-7 inline-flex h-12 items-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-6 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]">
+                    <button className="mt-7 inline-flex h-12 items-center gap-2 rounded-md bg-orange-500 px-6 text-sm font-bold text-white transition-colors hover:bg-orange-600">
                       Discuss Your Requirement
                       <ArrowRight className="h-4 w-4" />
                     </button>
@@ -183,8 +182,8 @@ export default function MarketingServices() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-50 py-20">
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-5 rounded-3xl bg-gradient-to-br from-primary to-sky-600 px-8 py-14 text-center text-white shadow-2xl shadow-primary/30">
+      <section className="bg-white py-20">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-5 rounded-2xl bg-primary px-8 py-14 text-center text-white">
           <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl">
             Need a customised solution?
           </h2>
@@ -195,12 +194,12 @@ export default function MarketingServices() {
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
             <Link href="/contact">
-              <button className="inline-flex h-12 items-center gap-2 rounded-md bg-white px-7 text-sm font-bold text-primary shadow-lg transition-transform hover:scale-[1.02]">
+              <button className="inline-flex h-12 items-center gap-2 rounded-md bg-orange-500 px-7 text-sm font-bold text-white transition-colors hover:bg-orange-600">
                 Request a Quote <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
             <Link href="/portal">
-              <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-white/40 bg-white/5 px-7 text-sm font-bold text-white backdrop-blur transition-colors hover:bg-white/10">
+              <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-white/40 bg-transparent px-7 text-sm font-bold text-white transition-colors hover:bg-white/10">
                 Existing Customer? Open Portal
               </button>
             </Link>

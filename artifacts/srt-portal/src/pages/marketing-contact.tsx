@@ -37,7 +37,7 @@ export default function MarketingContact() {
       <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
         <div className="absolute inset-0 opacity-25">
           <img src={`${import.meta.env.BASE_URL}images/engineer.jpg`} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/85 to-slate-950" />
+          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 text-center">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Contact Us</p>
@@ -62,9 +62,9 @@ export default function MarketingContact() {
               </div>
               <h3 className="mt-4 text-base font-bold text-slate-900">Head Office</h3>
               <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                Plot 12, HITEC City Main Road,<br />
-                Madhapur, Hyderabad,<br />
-                Telangana 500081, India
+                No. 12, Avinashi Road,<br />
+                Tirupur,<br />
+                Tamil Nadu 641601, India
               </p>
             </div>
 
@@ -102,7 +102,7 @@ export default function MarketingContact() {
             </div>
 
             <Link href="/portal">
-              <div className="cursor-pointer rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white shadow-md transition-all hover:shadow-xl">
+              <div className="cursor-pointer rounded-2xl bg-slate-900 p-6 text-white transition-colors hover:bg-slate-800">
                 <p className="text-xs font-bold uppercase tracking-wider text-primary">Existing Customer?</p>
                 <p className="mt-2 text-base font-bold">Open the Customer Portal</p>
                 <p className="mt-1 text-xs text-slate-300">

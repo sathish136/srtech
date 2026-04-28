@@ -11,9 +11,10 @@ import {
   Instagram,
   Linkedin,
   Youtube,
-  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const BASE = import.meta.env.BASE_URL;
 
 type NavItem = { href: string; label: string };
 
@@ -29,10 +30,14 @@ function Brand({ dark = false }: { dark?: boolean }) {
   return (
     <div className="flex items-center gap-3">
       <div className={cn(
-        "flex h-12 w-12 items-center justify-center rounded-xl shadow-md",
-        dark ? "bg-gradient-to-br from-primary to-sky-600" : "bg-gradient-to-br from-primary to-sky-600"
+        "flex h-14 w-14 items-center justify-center rounded-lg overflow-hidden",
+        dark ? "bg-white p-1.5" : "bg-white"
       )}>
-        <ShieldCheck className="h-7 w-7 text-white" strokeWidth={2.2} />
+        <img
+          src={`${BASE}logo.png`}
+          alt="Sree Ram Technologies"
+          className="h-full w-full object-contain"
+        />
       </div>
       <div className="flex flex-col leading-tight">
         <span className={cn(
@@ -45,7 +50,7 @@ function Brand({ dark = false }: { dark?: boolean }) {
           "text-[10px] uppercase tracking-[0.18em] font-semibold",
           dark ? "text-slate-400" : "text-slate-500"
         )}>
-          Security · Surveillance · Solutions
+          CCTV · Biometrics · RF Tower
         </span>
       </div>
     </div>
@@ -62,30 +67,30 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-white text-slate-900">
       {/* Top utility bar */}
-      <div className="hidden bg-slate-950 text-slate-300 md:block">
+      <div className="hidden bg-primary text-white md:block">
         <div className="mx-auto flex h-10 w-full max-w-screen-2xl items-center justify-between px-6 text-xs">
           <div className="flex items-center gap-6">
-            <span className="text-slate-400">Welcome to Sree Ram Technologies — Your trusted security partner since 2008</span>
+            <span>Welcome to Sree Ram Technologies — Your trusted security partner since 2008</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="mailto:info@sreeramtech.in" className="flex items-center gap-1.5 hover:text-white transition-colors">
+            <a href="mailto:info@sreeramtech.in" className="flex items-center gap-1.5 transition-colors hover:text-orange-300">
               <Mail className="h-3.5 w-3.5" />
               info@sreeramtech.in
             </a>
-            <a href="tel:+919876543210" className="flex items-center gap-1.5 hover:text-white transition-colors">
+            <a href="tel:+919876543210" className="flex items-center gap-1.5 transition-colors hover:text-orange-300">
               <Phone className="h-3.5 w-3.5" />
               +91 98765 43210
             </a>
-            <span className="flex items-center gap-1.5 text-slate-400">
+            <span className="flex items-center gap-1.5">
               <MapPin className="h-3.5 w-3.5" />
-              Hyderabad, Telangana
+              Tirupur, Tamil Nadu
             </span>
           </div>
         </div>
       </div>
 
       {/* Main navigation */}
-      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white shadow-sm">
         <div className="mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-4 md:px-6">
           <Link href="/">
             <div className="cursor-pointer transition-opacity hover:opacity-90">
@@ -109,7 +114,7 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
                   >
                     {item.label}
                     {active && (
-                      <span className="absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-primary" />
+                      <span className="absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-orange-500" />
                     )}
                   </div>
                 </Link>
@@ -118,10 +123,9 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            {/* Open Web App CTA */}
             <Link href="/portal">
               <button
-                className="hidden h-11 items-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:shadow-lg hover:scale-[1.02] sm:inline-flex"
+                className="hidden h-11 items-center gap-2 rounded-md bg-orange-500 px-5 text-sm font-bold text-white transition-colors hover:bg-orange-600 sm:inline-flex"
                 data-testid="button-open-portal"
               >
                 Open Web App
@@ -129,7 +133,6 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
               </button>
             </Link>
 
-            {/* Mobile toggle */}
             <button
               onClick={() => setMobileOpen((v) => !v)}
               className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 text-slate-700 lg:hidden"
@@ -163,7 +166,7 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
                 );
               })}
               <Link href="/portal">
-                <div className="mt-2 flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-4 py-3 text-sm font-bold text-white sm:hidden">
+                <div className="mt-2 flex items-center justify-center gap-2 rounded-md bg-orange-500 px-4 py-3 text-sm font-bold text-white sm:hidden">
                   Open Web App
                   <ArrowUpRight className="h-4 w-4" />
                 </div>
@@ -183,12 +186,12 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
               <Brand dark />
               <p className="mt-5 text-sm leading-relaxed text-slate-400">
                 A trusted CCTV, biometrics, security systems and RF tower
-                solutions provider — sales, installation and after-sales support
-                across South India.
+                solutions provider — sales, installation and after-sales
+                support across Tamil Nadu.
               </p>
               <div className="mt-5 flex items-center gap-3">
                 {[Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
-                  <a key={i} href="#" className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-300 transition-all hover:bg-primary hover:text-white hover:scale-110">
+                  <a key={i} href="#" className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-300 transition-all hover:bg-orange-500 hover:text-white">
                     <Icon className="h-4 w-4" />
                   </a>
                 ))}
@@ -221,15 +224,15 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
               <h4 className="text-sm font-bold uppercase tracking-wider text-white">Get In Touch</h4>
               <ul className="mt-4 space-y-3 text-sm text-slate-400">
                 <li className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  <span>Plot 12, HITEC City, Hyderabad, Telangana 500081</span>
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" />
+                  <span>No. 12, Avinashi Road, Tirupur, Tamil Nadu 641601</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Phone className="h-4 w-4 text-primary" />
+                  <Phone className="h-4 w-4 text-orange-500" />
                   <a href="tel:+919876543210" className="hover:text-white">+91 98765 43210</a>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Mail className="h-4 w-4 text-primary" />
+                  <Mail className="h-4 w-4 text-orange-500" />
                   <a href="mailto:info@sreeramtech.in" className="hover:text-white">info@sreeramtech.in</a>
                 </li>
               </ul>

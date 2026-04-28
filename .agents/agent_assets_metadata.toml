@@ -42,3 +42,21 @@ id = "FHIfRHpeyYQ3LzkM8-WX8"
 uri = "file://attached_assets/stock_images/rf_tower.jpg"
 type = "image"
 title = "telecommunication tower antenna"
+
+[[outputs]]
+id = "dtOBfrODpeF-Klw9Oaa9I"
+uri = "file://attached_assets/stock_images/product_camera.jpg"
+type = "image"
+title = "outdoor security camera white background isolated product"
+
+[[outputs]]
+id = "nb9wZbJgvTBAjXr-pF6bR"
+uri = "file://attached_assets/stock_images/product_attendance.jpg"
+type = "image"
+title = "fingerprint attendance machine on wall product"
+
+[[outputs]]
+id = "7EKMCziyPcG8GQyZjPz6L"
+uri = "file://attached_assets/stock_images/product_biometric.jpg"
+type = "image"
+title = "biometric fingerprint reader white background product"

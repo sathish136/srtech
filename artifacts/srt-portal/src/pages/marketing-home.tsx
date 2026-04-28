@@ -1,29 +1,36 @@
 import { Link } from "wouter";
 import {
   ArrowRight,
-  ShieldCheck,
   Camera,
   Fingerprint,
   Flame,
   RadioTower,
   Wrench,
+  ShieldCheck,
   CheckCircle2,
   Users,
   Award,
   Clock,
   Phone,
-  ArrowUpRight,
   Building2,
   Factory,
   Home,
   Landmark,
   Quote,
   Star,
-  PlayCircle,
 } from "lucide-react";
 import { MarketingLayout } from "@/components/marketing-layout";
 
 const BASE = import.meta.env.BASE_URL;
+
+const categories = [
+  { icon: Camera, label: "CCTV Surveillance" },
+  { icon: Fingerprint, label: "Biometric Access" },
+  { icon: Flame, label: "Fire Alarm" },
+  { icon: RadioTower, label: "RF Tower" },
+  { icon: ShieldCheck, label: "Intrusion Alarm" },
+  { icon: Wrench, label: "AMC Service" },
+];
 
 const services = [
   { icon: Camera, title: "CCTV Surveillance", description: "HD / 4K IP cameras, NVRs, video analytics and 24×7 monitoring." },
@@ -52,57 +59,56 @@ const testimonials = [
   {
     quote: "Sree Ram Technologies handled our entire campus surveillance — 80+ cameras, biometrics and a control room. Rollout was smooth and the after-sales response is excellent.",
     name: "Ramesh K.",
-    role: "Facility Head, Hyderabad",
+    role: "Facility Head, Tirupur",
   },
   {
     quote: "Their RF tower team is one of the best we have worked with. On-time delivery and very disciplined safety practices on site.",
     name: "Anita P.",
-    role: "Project Manager, Bharat Telecom",
+    role: "Project Manager, Coimbatore",
   },
   {
     quote: "The AMC has been worth every rupee. Tickets are answered the same day and the on-site engineers genuinely know the equipment.",
     name: "Suresh M.",
-    role: "Plant Manager, Vijayawada",
+    role: "Plant Manager, Erode",
   },
 ];
 
 export default function MarketingHome() {
   return (
     <MarketingLayout>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-sky-50/40">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(31,169,230,0.15),transparent_55%)]" />
-        <div className="relative mx-auto grid w-full max-w-screen-2xl items-center gap-12 px-6 py-16 lg:grid-cols-12 lg:gap-16 lg:py-24">
+      {/* HERO — liveu.lk style with product collage */}
+      <section className="relative overflow-hidden bg-white">
+        <div className="relative mx-auto grid w-full max-w-screen-2xl items-center gap-12 px-6 py-16 lg:grid-cols-12 lg:gap-8 lg:py-24">
           <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              No.1 Security Solutions Provider in South India
-            </div>
-            <h1 className="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
-              Smarter Security.
+            <p className="font-serif text-base italic text-orange-500 md:text-lg">
+              No.1 CCTV / Biometric &amp; Security Solution Provider in Tamil Nadu.
+            </p>
+            <h1 className="mt-4 text-5xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+              SREE RAM
               <br />
-              <span className="bg-gradient-to-r from-primary to-sky-600 bg-clip-text text-transparent">
-                Stronger Surveillance.
-              </span>
+              <span className="text-primary">TECHNOLOGIES</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
-              Sree Ram Technologies designs, installs and maintains end-to-end
-              security infrastructure — CCTV, biometrics, fire alarms and RF
-              towers — for businesses, factories and government across South
-              India.
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600">
+              Sree Ram Technologies, established in 2008 in Tirupur, is a
+              leading provider of electronic security solutions across Tamil
+              Nadu. With 16+ years of expertise in installation and
+              after-sales support, we serve Residential, Commercial,
+              Industrial, Manufacturing and Government sectors. Committed to
+              quality and innovation, we deliver reliable, tailored security
+              systems to safeguard homes and enterprises alike.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link href="/services">
-                <button className="inline-flex h-12 items-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-7 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02]" data-testid="button-explore-services">
-                  Explore Services
+                <button className="inline-flex h-12 items-center gap-2 rounded-md bg-orange-500 px-7 text-sm font-bold text-white transition-colors hover:bg-orange-600" data-testid="button-explore-services">
+                  Explore Now
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>
-              <Link href="/portal">
-                <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-slate-900 bg-white px-7 text-sm font-bold text-slate-900 transition-all hover:bg-slate-900 hover:text-white" data-testid="button-hero-portal">
-                  <PlayCircle className="h-5 w-5" />
-                  Open Web App
+              <Link href="/about">
+                <button className="inline-flex h-12 items-center gap-2 rounded-md bg-primary px-7 text-sm font-bold text-white transition-colors hover:bg-primary/90" data-testid="button-about">
+                  About Us
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </Link>
             </div>
@@ -123,46 +129,82 @@ export default function MarketingHome() {
             </div>
           </div>
 
-          {/* Hero image */}
+          {/* Product collage */}
           <div className="relative lg:col-span-6">
-            <div className="absolute -left-8 -top-8 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
-            <div className="absolute -bottom-10 -right-8 h-80 w-80 rounded-full bg-sky-300/30 blur-3xl" />
-            <div className="relative">
-              <img
-                src={`${BASE}images/hero-camera.jpg`}
-                alt="Modern CCTV security camera"
-                className="aspect-[4/3] w-full rounded-3xl object-cover shadow-2xl"
-              />
-              {/* Floating cards */}
-              <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-2xl backdrop-blur md:block">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600">
-                    <CheckCircle2 className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-extrabold text-slate-900">1,200+</p>
-                    <p className="text-xs font-medium text-slate-500">Successful Installations</p>
-                  </div>
-                </div>
+            <div className="relative mx-auto h-[480px] w-full max-w-[560px]">
+              {/* Decorative dotted orbit */}
+              <div className="absolute inset-4 rounded-full border-2 border-dashed border-slate-200" />
+              <div className="absolute inset-16 rounded-full border-2 border-dashed border-slate-200" />
+
+              {/* Decorative dots */}
+              <span className="absolute left-2 top-32 h-2.5 w-2.5 rounded-full bg-orange-500" />
+              <span className="absolute right-6 top-12 h-3 w-3 rounded-full bg-primary" />
+              <span className="absolute bottom-12 left-12 h-2 w-2 rounded-full bg-orange-500" />
+              <span className="absolute bottom-20 right-8 h-2.5 w-2.5 rounded-full bg-primary" />
+
+              {/* Center logo */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <img
+                  src={`${BASE}logo.png`}
+                  alt="Sree Ram Technologies"
+                  className="h-44 w-44 object-contain"
+                />
               </div>
-              <div className="absolute -top-6 -right-6 hidden rounded-2xl bg-slate-900 p-5 text-white shadow-2xl md:block">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 text-primary">
-                    <Clock className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-extrabold">24×7</p>
-                    <p className="text-xs font-medium text-slate-300">Live Support</p>
-                  </div>
-                </div>
+
+              {/* Floating product 1 — camera */}
+              <div className="absolute -left-2 top-4 h-36 w-36 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200">
+                <img src={`${BASE}images/hero-camera.jpg`} alt="CCTV camera" className="h-full w-full object-cover" />
+              </div>
+
+              {/* Floating product 2 — biometric */}
+              <div className="absolute -right-2 top-16 h-40 w-40 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200">
+                <img src={`${BASE}images/biometric.jpg`} alt="Biometric reader" className="h-full w-full object-cover" />
+              </div>
+
+              {/* Floating product 3 — control room */}
+              <div className="absolute -right-4 bottom-4 h-36 w-36 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200">
+                <img src={`${BASE}images/control-room.jpg`} alt="Control room" className="h-full w-full object-cover" />
+              </div>
+
+              {/* Floating product 4 — fire alarm */}
+              <div className="absolute -left-4 bottom-8 h-36 w-36 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200">
+                <img src={`${BASE}images/fire-alarm.jpg`} alt="Fire alarm" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* STATS BAR */}
-      <section className="bg-gradient-to-r from-primary to-sky-600 text-white">
+      {/* TOP CATEGORIES — liveu.lk style rounded cards */}
+      <section className="border-y border-dashed border-orange-300 bg-white py-16">
+        <div className="mx-auto w-full max-w-screen-2xl px-6">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl">
+              Our Top Categories
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-slate-600">
+              Browse the complete range of security and surveillance solutions we deliver.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
+            {categories.map((c) => (
+              <Link key={c.label} href="/services">
+                <div className="group flex cursor-pointer flex-col items-center text-center">
+                  <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-slate-50 ring-1 ring-slate-200 transition-all group-hover:bg-primary group-hover:ring-primary">
+                    <c.icon className="h-10 w-10 text-primary transition-colors group-hover:text-white" strokeWidth={1.5} />
+                    <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-orange-500 ring-2 ring-white" />
+                  </div>
+                  <p className="mt-4 text-sm font-bold text-slate-900">{c.label}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STATS BAR — flat */}
+      <section className="bg-primary text-white">
         <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-2 gap-8 px-6 py-12 md:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
@@ -174,12 +216,12 @@ export default function MarketingHome() {
       </section>
 
       {/* SERVICES */}
-      <section className="bg-white py-24">
+      <section className="bg-slate-50 py-24">
         <div className="mx-auto w-full max-w-screen-2xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">What We Do</p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">What We Do</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
-              End-to-end security & surveillance services
+              End-to-end security &amp; surveillance services
             </h2>
             <p className="mt-5 text-base leading-relaxed text-slate-600">
               From the first site survey to lifetime maintenance — one
@@ -191,17 +233,16 @@ export default function MarketingHome() {
             {services.map((s) => (
               <div
                 key={s.title}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl bg-white p-8 shadow-[0_2px_20px_-8px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/60 transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(31,169,230,0.35)] hover:ring-primary/30"
+                className="group relative cursor-pointer overflow-hidden rounded-2xl bg-white p-8 ring-1 ring-slate-200 transition-all hover:-translate-y-1 hover:ring-primary hover:shadow-lg"
                 data-testid={`card-service-${s.title.toLowerCase().replace(/\s+/g, "-")}`}
               >
-                <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-primary/5 transition-all group-hover:scale-150 group-hover:bg-primary/10" />
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-sky-600 text-white shadow-lg shadow-primary/25">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                   <s.icon className="h-7 w-7" />
                 </div>
-                <h3 className="relative mt-5 text-lg font-bold text-slate-900">{s.title}</h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-slate-600">{s.description}</p>
+                <h3 className="mt-5 text-lg font-bold text-slate-900">{s.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.description}</p>
                 <Link href="/services">
-                  <div className="relative mt-5 flex items-center gap-1.5 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="mt-5 flex items-center gap-1.5 text-sm font-semibold text-orange-500 opacity-0 transition-opacity group-hover:opacity-100">
                     Learn more <ArrowRight className="h-4 w-4" />
                   </div>
                 </Link>
@@ -212,27 +253,26 @@ export default function MarketingHome() {
       </section>
 
       {/* WHY US — with image */}
-      <section className="bg-slate-50 py-24">
+      <section className="bg-white py-24">
         <div className="mx-auto grid w-full max-w-screen-2xl items-center gap-14 px-6 lg:grid-cols-2">
           <div className="relative">
-            <div className="absolute -left-8 top-8 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
             <img
               src={`${BASE}images/control-room.jpg`}
               alt="Security control room"
-              className="relative aspect-[4/5] w-full rounded-3xl object-cover shadow-2xl"
+              className="aspect-[4/5] w-full rounded-2xl object-cover"
             />
-            <div className="absolute -bottom-6 -right-6 hidden rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-slate-200 md:block">
+            <div className="absolute -bottom-6 -right-6 hidden rounded-2xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:block">
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-gradient-to-br from-primary to-sky-600 text-xs font-bold text-white flex items-center justify-center">
-                      {String.fromCharCode(64 + i)}
+                  {["A", "B", "C", "D"].map((l) => (
+                    <div key={l} className="h-10 w-10 rounded-full border-2 border-white bg-primary text-xs font-bold text-white flex items-center justify-center">
+                      {l}
                     </div>
                   ))}
                 </div>
                 <div>
                   <p className="text-sm font-bold text-slate-900">350+ happy clients</p>
-                  <div className="flex items-center gap-0.5 text-amber-500">
+                  <div className="flex items-center gap-0.5 text-orange-500">
                     {[1,2,3,4,5].map((i) => <Star key={i} className="h-3.5 w-3.5 fill-current" />)}
                     <span className="ml-1 text-xs font-semibold text-slate-600">4.9 / 5</span>
                   </div>
@@ -242,7 +282,7 @@ export default function MarketingHome() {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Why Sree Ram</p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">Why Sree Ram</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
               The reliable partner for mission-critical security
             </h2>
@@ -259,7 +299,7 @@ export default function MarketingHome() {
                 { icon: Clock, title: "Fast on-site response SLAs", text: "Same-day response across our service zones with stocked spare parts." },
               ].map((b) => (
                 <div key={b.title} className="flex gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-sky-600 text-white shadow-lg shadow-primary/25">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white">
                     <b.icon className="h-5 w-5" />
                   </div>
                   <div>
@@ -274,10 +314,10 @@ export default function MarketingHome() {
       </section>
 
       {/* SECTORS */}
-      <section className="bg-white py-24">
+      <section className="bg-slate-50 py-24">
         <div className="mx-auto w-full max-w-screen-2xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Sectors We Serve</p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">Sectors We Serve</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
               Built for every environment
             </h2>
@@ -289,11 +329,11 @@ export default function MarketingHome() {
 
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {sectors.map((sec) => (
-              <div key={sec.label} className="group relative h-72 cursor-pointer overflow-hidden rounded-2xl shadow-lg">
+              <div key={sec.label} className="group relative h-72 cursor-pointer overflow-hidden rounded-2xl">
                 <img src={sec.image} alt={sec.label} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                <div className="absolute inset-0 bg-slate-950/55" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 backdrop-blur transition-all group-hover:bg-primary">
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500">
                     <sec.icon className="h-5 w-5" />
                   </div>
                   <p className="text-base font-bold">{sec.label}</p>
@@ -306,15 +346,15 @@ export default function MarketingHome() {
 
       {/* RF TOWER feature row */}
       <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
-        <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 opacity-25">
           <img src={`${BASE}images/rf-tower.jpg`} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40" />
+          <div className="absolute inset-0 bg-slate-950/70" />
         </div>
         <div className="relative mx-auto grid w-full max-w-screen-2xl items-center gap-12 px-6 lg:grid-cols-2">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Telecom Infrastructure</p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400">Telecom Infrastructure</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight md:text-5xl">
-              RF Tower Installation & Maintenance
+              RF Tower Installation &amp; Maintenance
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-300">
               Specialised teams for telecom, broadcast and microwave tower
@@ -329,13 +369,13 @@ export default function MarketingHome() {
                 "Periodic structural inspections",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2 text-sm">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-orange-400" />
                   <span className="text-slate-200">{item}</span>
                 </div>
               ))}
             </div>
             <Link href="/services">
-              <button className="mt-8 inline-flex h-12 items-center gap-2 rounded-md bg-white px-6 text-sm font-bold text-slate-900 shadow-lg transition-all hover:scale-[1.02]">
+              <button className="mt-8 inline-flex h-12 items-center gap-2 rounded-md bg-orange-500 px-6 text-sm font-bold text-white transition-colors hover:bg-orange-600">
                 Explore Tower Services <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
@@ -347,21 +387,28 @@ export default function MarketingHome() {
       <section className="bg-white py-24">
         <div className="mx-auto w-full max-w-screen-2xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Client Voices</p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-500">Client Voices</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
-              Trusted by businesses across South India
+              Trusted by businesses across Tamil Nadu
             </h2>
           </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {testimonials.map((t, i) => (
-              <div key={t.name} className={`relative rounded-2xl p-8 ${i === 1 ? "bg-gradient-to-br from-primary to-sky-600 text-white shadow-2xl shadow-primary/30" : "bg-slate-50 text-slate-700"}`}>
-                <Quote className={`h-10 w-10 ${i === 1 ? "text-white/30" : "text-primary/30"}`} />
+              <div
+                key={t.name}
+                className={`relative rounded-2xl p-8 ${
+                  i === 1
+                    ? "bg-primary text-white"
+                    : "bg-slate-50 text-slate-700 ring-1 ring-slate-200"
+                }`}
+              >
+                <Quote className={`h-10 w-10 ${i === 1 ? "text-white/30" : "text-orange-500/40"}`} />
                 <p className={`mt-4 text-sm leading-relaxed ${i === 1 ? "text-white/95" : "text-slate-700"}`}>
                   {t.quote}
                 </p>
                 <div className={`mt-6 flex items-center gap-3 border-t pt-5 ${i === 1 ? "border-white/20" : "border-slate-200"}`}>
-                  <div className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${i === 1 ? "bg-white/20 text-white" : "bg-primary/10 text-primary"}`}>
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${i === 1 ? "bg-white/20 text-white" : "bg-orange-500 text-white"}`}>
                     {t.name.split(" ").map(n => n[0]).join("")}
                   </div>
                   <div>
@@ -376,9 +423,8 @@ export default function MarketingHome() {
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-slate-950 py-20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(31,169,230,0.3),transparent_60%)]" />
-        <div className="relative mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-8 px-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
+      <section className="bg-slate-950 py-20">
+        <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-8 px-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
           <div className="max-w-2xl">
             <h2 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
               Ready to secure what matters most?
@@ -390,13 +436,13 @@ export default function MarketingHome() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/contact">
-              <button className="inline-flex h-12 items-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-7 text-sm font-bold text-white shadow-lg transition-all hover:scale-[1.02]">
+              <button className="inline-flex h-12 items-center gap-2 rounded-md bg-orange-500 px-7 text-sm font-bold text-white transition-colors hover:bg-orange-600">
                 Request a Quote
                 <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
             <a href="tel:+919876543210">
-              <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-white/30 bg-white/5 px-7 text-sm font-bold text-white backdrop-blur transition-colors hover:bg-white/10">
+              <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-white/30 bg-transparent px-7 text-sm font-bold text-white transition-colors hover:bg-white/10">
                 <Phone className="h-4 w-4" />
                 +91 98765 43210
               </button>

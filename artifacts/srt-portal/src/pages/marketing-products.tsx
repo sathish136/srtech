@@ -110,7 +110,7 @@ export default function MarketingProducts() {
       <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
         <div className="absolute inset-0 opacity-25">
           <img src={`${import.meta.env.BASE_URL}images/biometric.jpg`} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/85 to-slate-950" />
+          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 text-center">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Our Products</p>
@@ -142,8 +142,8 @@ export default function MarketingProducts() {
                 className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:shadow-xl"
                 data-testid={`card-product-${c.title.toLowerCase().replace(/\s+/g, "-")}`}
               >
-                <div className={`flex h-32 items-center justify-center bg-gradient-to-br ${c.color}`}>
-                  <c.icon className="h-14 w-14 text-white/90" strokeWidth={1.5} />
+                <div className="flex h-32 items-center justify-center bg-primary">
+                  <c.icon className="h-14 w-14 text-white" strokeWidth={1.5} />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-slate-900">{c.title}</h3>

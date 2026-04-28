@@ -31,7 +31,7 @@ const values = [
 ];
 
 const milestones = [
-  { year: "2008", title: "Founded in Hyderabad", text: "Started as a 3-person CCTV installation team serving local businesses." },
+  { year: "2008", title: "Founded in Tirupur", text: "Started as a 3-person CCTV installation team serving local businesses." },
   { year: "2012", title: "Expanded to biometrics", text: "Became authorised partner for major biometric access control brands." },
   { year: "2016", title: "RF Tower division", text: "Launched specialised telecom & broadcast tower installation services." },
   { year: "2020", title: "100+ AMC clients", text: "Crossed 100 active annual maintenance contracts across 5 states." },
@@ -45,7 +45,7 @@ export default function MarketingAbout() {
       <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
         <div className="absolute inset-0 opacity-30">
           <img src={`${import.meta.env.BASE_URL}images/office.jpg`} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/85 to-slate-950" />
+          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 text-center">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">About Us</p>
@@ -53,7 +53,7 @@ export default function MarketingAbout() {
             16+ years of building safer environments
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
-            Sree Ram Technologies has grown from a small Hyderabad-based CCTV
+            Sree Ram Technologies has grown from a small Tirupur-based CCTV
             outfit into a full-service security and telecom infrastructure
             company — serving 350+ active clients today.
           </p>
@@ -64,11 +64,10 @@ export default function MarketingAbout() {
       <section className="bg-white py-24">
         <div className="mx-auto grid w-full max-w-screen-2xl items-center gap-14 px-6 lg:grid-cols-2">
           <div className="relative order-2 lg:order-1">
-            <div className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-primary/20 to-sky-300/10 blur-2xl" />
             <img
               src={`${import.meta.env.BASE_URL}images/engineer.jpg`}
               alt="Engineer installing security equipment"
-              className="aspect-[4/5] w-full rounded-3xl object-cover shadow-2xl"
+              className="aspect-[4/5] w-full rounded-2xl object-cover ring-1 ring-slate-200"
             />
           </div>
           <div className="order-1 lg:order-2">
@@ -97,13 +96,13 @@ export default function MarketingAbout() {
               </p>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-4">
-              <div className="rounded-2xl bg-gradient-to-br from-primary to-sky-600 p-6 text-white shadow-lg shadow-primary/25">
+              <div className="rounded-2xl bg-primary p-6 text-white">
                 <p className="text-4xl font-extrabold">1,200+</p>
                 <p className="mt-1 text-sm font-medium text-white/90">Installations Completed</p>
               </div>
-              <div className="rounded-2xl bg-slate-900 p-6 text-white shadow-lg">
+              <div className="rounded-2xl bg-orange-500 p-6 text-white">
                 <p className="text-4xl font-extrabold">5</p>
-                <p className="mt-1 text-sm font-medium text-slate-300">States Served</p>
+                <p className="mt-1 text-sm font-medium text-white/90">States Served</p>
               </div>
             </div>
           </div>
@@ -121,13 +120,12 @@ export default function MarketingAbout() {
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {values.map((v) => (
-              <div key={v.title} className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-[0_2px_20px_-8px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/60 transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(31,169,230,0.35)]">
-                <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-primary/5 transition-all group-hover:scale-150" />
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-sky-600 text-white shadow-lg shadow-primary/25">
+              <div key={v.title} className="group rounded-2xl bg-white p-8 ring-1 ring-slate-200 transition-all hover:-translate-y-1 hover:ring-primary hover:shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                   <v.icon className="h-7 w-7" />
                 </div>
-                <h3 className="relative mt-5 text-xl font-bold text-slate-900">{v.title}</h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-slate-600">{v.text}</p>
+                <h3 className="mt-5 text-xl font-bold text-slate-900">{v.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{v.text}</p>
               </div>
             ))}
           </div>
