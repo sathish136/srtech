@@ -1,0 +1,44 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "KgrDf71VqG_kZF7FEMvaf"
+uri = "file://attached_assets/stock_images/engineer_install.jpg"
+type = "image"
+title = "professional engineer technician installing CCTV camera, blue uniform with helmet, working at height"
+
+[[outputs]]
+id = "RylYqxeYx0fd9gCLlpPtT"
+uri = "file://attached_assets/stock_images/office_building.jpg"
+type = "image"
+title = "modern office building exterior, glass facade with security cameras, corporate architecture"
+
+[[outputs]]
+id = "bU0tHU_BXDGN_EdpNUpR0"
+uri = "file://attached_assets/stock_images/industrial.jpg"
+type = "image"
+title = "industrial factory plant with security infrastructure, large warehouse exterior"
+
+[[outputs]]
+id = "z8c1ZBeBlM-iNhlXaCYhx"
+uri = "file://attached_assets/stock_images/hero_camera.jpg"
+type = "image"
+title = "security camera"
+
+[[outputs]]
+id = "EM4FHJ6AZZwdBKBiuqi3M"
+uri = "file://attached_assets/stock_images/biometric.jpg"
+type = "image"
+title = "fingerprint scanner biometric"
+
+[[outputs]]
+id = "BMR4wRyjcS9mW2BI4Eqrz"
+uri = "file://attached_assets/stock_images/control_room.jpg"
+type = "image"
+title = "security monitoring control room screens"
+
+[[outputs]]
+id = "FHIfRHpeyYQ3LzkM8-WX8"
+uri = "file://attached_assets/stock_images/rf_tower.jpg"
+type = "image"
+title = "telecommunication tower antenna"

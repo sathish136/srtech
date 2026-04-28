@@ -34,14 +34,17 @@ export default function MarketingContact() {
   return (
     <MarketingLayout>
       {/* HEADER */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(31,169,230,0.25),transparent_60%)]" />
+      <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
+        <div className="absolute inset-0 opacity-25">
+          <img src={`${import.meta.env.BASE_URL}images/engineer.jpg`} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/85 to-slate-950" />
+        </div>
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Contact Us</p>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-5xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Contact Us</p>
+          <h1 className="mt-3 text-5xl font-extrabold tracking-tight md:text-6xl">
             Talk to our security experts
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-300">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
             Get a free site survey, a tailored proposal and answers to your
             questions — usually within one business day.
           </p>

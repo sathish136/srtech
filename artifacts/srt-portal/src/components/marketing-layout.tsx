@@ -11,6 +11,7 @@ import {
   Instagram,
   Linkedin,
   Youtube,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -24,6 +25,33 @@ const navItems: NavItem[] = [
   { href: "/contact", label: "Contact" },
 ];
 
+function Brand({ dark = false }: { dark?: boolean }) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className={cn(
+        "flex h-12 w-12 items-center justify-center rounded-xl shadow-md",
+        dark ? "bg-gradient-to-br from-primary to-sky-600" : "bg-gradient-to-br from-primary to-sky-600"
+      )}>
+        <ShieldCheck className="h-7 w-7 text-white" strokeWidth={2.2} />
+      </div>
+      <div className="flex flex-col leading-tight">
+        <span className={cn(
+          "text-base font-extrabold tracking-tight",
+          dark ? "text-white" : "text-slate-900"
+        )}>
+          Sree Ram <span className="text-primary">Technologies</span>
+        </span>
+        <span className={cn(
+          "text-[10px] uppercase tracking-[0.18em] font-semibold",
+          dark ? "text-slate-400" : "text-slate-500"
+        )}>
+          Security · Surveillance · Solutions
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export function MarketingLayout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -34,10 +62,10 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-white text-slate-900">
       {/* Top utility bar */}
-      <div className="hidden bg-slate-900 text-slate-200 md:block">
+      <div className="hidden bg-slate-950 text-slate-300 md:block">
         <div className="mx-auto flex h-10 w-full max-w-screen-2xl items-center justify-between px-6 text-xs">
           <div className="flex items-center gap-6">
-            <span className="text-slate-400">Welcome to Sree Ram Technologies</span>
+            <span className="text-slate-400">Welcome to Sree Ram Technologies — Your trusted security partner since 2008</span>
           </div>
           <div className="flex items-center gap-6">
             <a href="mailto:info@sreeramtech.in" className="flex items-center gap-1.5 hover:text-white transition-colors">
@@ -57,25 +85,11 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Main navigation */}
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-18 w-full max-w-screen-2xl items-center justify-between px-4 py-3 md:px-6">
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-4 md:px-6">
           <Link href="/">
-            <div className="flex items-center gap-3 transition-opacity hover:opacity-80">
-              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-lg bg-primary/10">
-                <img
-                  src={import.meta.env.BASE_URL + "logo.png"}
-                  alt="Sree Ram Technologies"
-                  className="h-9 w-9 object-contain"
-                />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-base font-bold tracking-tight text-slate-900">
-                  Sree Ram Technologies
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.15em] text-primary font-semibold">
-                  Security · Surveillance · Solutions
-                </span>
-              </div>
+            <div className="cursor-pointer transition-opacity hover:opacity-90">
+              <Brand />
             </div>
           </Link>
 
@@ -107,7 +121,7 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
             {/* Open Web App CTA */}
             <Link href="/portal">
               <button
-                className="hidden h-11 items-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md sm:inline-flex"
+                className="hidden h-11 items-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:shadow-lg hover:scale-[1.02] sm:inline-flex"
                 data-testid="button-open-portal"
               >
                 Open Web App
@@ -149,7 +163,7 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
                 );
               })}
               <Link href="/portal">
-                <div className="mt-2 flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground sm:hidden">
+                <div className="mt-2 flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-4 py-3 text-sm font-bold text-white sm:hidden">
                   Open Web App
                   <ArrowUpRight className="h-4 w-4" />
                 </div>
@@ -162,80 +176,59 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-slate-950 text-slate-300">
-        <div className="mx-auto w-full max-w-screen-2xl px-6 py-14">
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <footer className="bg-slate-950 text-slate-300">
+        <div className="mx-auto w-full max-w-screen-2xl px-6 py-16">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
             <div className="lg:col-span-1">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-lg bg-white/5">
-                  <img
-                    src={import.meta.env.BASE_URL + "logo.png"}
-                    alt="Sree Ram Technologies"
-                    className="h-8 w-8 object-contain"
-                  />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white">Sree Ram Technologies</p>
-                  <p className="text-[10px] uppercase tracking-wider text-slate-400">
-                    Established 2008
-                  </p>
-                </div>
-              </div>
+              <Brand dark />
               <p className="mt-5 text-sm leading-relaxed text-slate-400">
                 A trusted CCTV, biometrics, security systems and RF tower
                 solutions provider — sales, installation and after-sales support
                 across South India.
               </p>
               <div className="mt-5 flex items-center gap-3">
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 text-slate-300 transition-colors hover:bg-primary hover:text-white">
-                  <Facebook className="h-4 w-4" />
-                </a>
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 text-slate-300 transition-colors hover:bg-primary hover:text-white">
-                  <Instagram className="h-4 w-4" />
-                </a>
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 text-slate-300 transition-colors hover:bg-primary hover:text-white">
-                  <Linkedin className="h-4 w-4" />
-                </a>
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 text-slate-300 transition-colors hover:bg-primary hover:text-white">
-                  <Youtube className="h-4 w-4" />
-                </a>
+                {[Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
+                  <a key={i} href="#" className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-300 transition-all hover:bg-primary hover:text-white hover:scale-110">
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
               </div>
             </div>
 
             <div>
               <h4 className="text-sm font-bold uppercase tracking-wider text-white">Company</h4>
               <ul className="mt-4 space-y-2.5 text-sm">
-                <li><Link href="/about"><span className="cursor-pointer hover:text-white">About Us</span></Link></li>
-                <li><Link href="/services"><span className="cursor-pointer hover:text-white">Services</span></Link></li>
-                <li><Link href="/products"><span className="cursor-pointer hover:text-white">Products</span></Link></li>
-                <li><Link href="/contact"><span className="cursor-pointer hover:text-white">Contact</span></Link></li>
-                <li><Link href="/portal"><span className="cursor-pointer hover:text-white">Customer Portal</span></Link></li>
+                <li><Link href="/about"><span className="cursor-pointer text-slate-400 transition-colors hover:text-white">About Us</span></Link></li>
+                <li><Link href="/services"><span className="cursor-pointer text-slate-400 transition-colors hover:text-white">Services</span></Link></li>
+                <li><Link href="/products"><span className="cursor-pointer text-slate-400 transition-colors hover:text-white">Products</span></Link></li>
+                <li><Link href="/contact"><span className="cursor-pointer text-slate-400 transition-colors hover:text-white">Contact</span></Link></li>
+                <li><Link href="/portal"><span className="cursor-pointer text-slate-400 transition-colors hover:text-white">Customer Portal</span></Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-sm font-bold uppercase tracking-wider text-white">Solutions</h4>
-              <ul className="mt-4 space-y-2.5 text-sm">
-                <li className="hover:text-white cursor-pointer">CCTV Surveillance</li>
-                <li className="hover:text-white cursor-pointer">Biometric Access</li>
-                <li className="hover:text-white cursor-pointer">Fire & Alarm Systems</li>
-                <li className="hover:text-white cursor-pointer">RF Tower Installation</li>
-                <li className="hover:text-white cursor-pointer">Annual Maintenance</li>
+              <ul className="mt-4 space-y-2.5 text-sm text-slate-400">
+                <li className="cursor-pointer hover:text-white">CCTV Surveillance</li>
+                <li className="cursor-pointer hover:text-white">Biometric Access</li>
+                <li className="cursor-pointer hover:text-white">Fire & Alarm Systems</li>
+                <li className="cursor-pointer hover:text-white">RF Tower Installation</li>
+                <li className="cursor-pointer hover:text-white">Annual Maintenance</li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-sm font-bold uppercase tracking-wider text-white">Get In Touch</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                <li className="flex items-start gap-2">
+              <ul className="mt-4 space-y-3 text-sm text-slate-400">
+                <li className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>Plot 12, HITEC City, Hyderabad, Telangana 500081</span>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex items-center gap-2.5">
                   <Phone className="h-4 w-4 text-primary" />
                   <a href="tel:+919876543210" className="hover:text-white">+91 98765 43210</a>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex items-center gap-2.5">
                   <Mail className="h-4 w-4 text-primary" />
                   <a href="mailto:info@sreeramtech.in" className="hover:text-white">info@sreeramtech.in</a>
                 </li>
@@ -246,8 +239,8 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-slate-500 md:flex-row">
             <p>© {new Date().getFullYear()} Sree Ram Technologies Pvt Ltd. All rights reserved.</p>
             <p className="flex items-center gap-4">
-              <span className="hover:text-slate-300 cursor-pointer">Privacy Policy</span>
-              <span className="hover:text-slate-300 cursor-pointer">Terms of Service</span>
+              <span className="cursor-pointer transition-colors hover:text-slate-300">Privacy Policy</span>
+              <span className="cursor-pointer transition-colors hover:text-slate-300">Terms of Service</span>
             </p>
           </div>
         </div>

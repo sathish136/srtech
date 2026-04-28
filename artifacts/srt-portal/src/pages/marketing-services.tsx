@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { MarketingLayout } from "@/components/marketing-layout";
 
+const BASE = import.meta.env.BASE_URL;
+
 const services = [
   {
     icon: Camera,
@@ -25,7 +27,7 @@ const services = [
       "Cloud backup & remote mobile viewing",
       "Video analytics — line-cross, intrusion, ANPR",
     ],
-    color: "bg-sky-50 text-sky-600",
+    image: `${BASE}images/hero-camera.jpg`,
   },
   {
     icon: Fingerprint,
@@ -40,7 +42,7 @@ const services = [
       "Visitor & contractor management module",
       "Anti-passback & multi-zone access rules",
     ],
-    color: "bg-violet-50 text-violet-600",
+    image: `${BASE}images/biometric.jpg`,
   },
   {
     icon: Flame,
@@ -55,7 +57,7 @@ const services = [
       "Public address & voice evacuation",
       "Annual fire safety compliance reporting",
     ],
-    color: "bg-rose-50 text-rose-600",
+    image: `${BASE}images/fire-alarm.jpg`,
   },
   {
     icon: RadioTower,
@@ -70,7 +72,7 @@ const services = [
       "Tower painting & galvanizing",
       "Periodic structural inspections",
     ],
-    color: "bg-amber-50 text-amber-600",
+    image: `${BASE}images/rf-tower.jpg`,
   },
   {
     icon: ShieldCheck,
@@ -85,7 +87,7 @@ const services = [
       "SOS & panic button integration",
       "24×7 monitored alarm response",
     ],
-    color: "bg-emerald-50 text-emerald-600",
+    image: `${BASE}images/control-room.jpg`,
   },
   {
     icon: Wrench,
@@ -100,7 +102,7 @@ const services = [
       "Service ticket portal access",
       "Quarterly health & uptime reports",
     ],
-    color: "bg-cyan-50 text-cyan-600",
+    image: `${BASE}images/engineer.jpg`,
   },
 ];
 
@@ -108,70 +110,82 @@ export default function MarketingServices() {
   return (
     <MarketingLayout>
       {/* HEADER */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(31,169,230,0.25),transparent_60%)]" />
+      <section className="relative overflow-hidden bg-slate-950 py-24 text-white">
+        <div className="absolute inset-0 opacity-25">
+          <img src={`${BASE}images/control-room.jpg`} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/85 to-slate-950" />
+        </div>
         <div className="relative mx-auto w-full max-w-screen-2xl px-6 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Our Services</p>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-5xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Our Services</p>
+          <h1 className="mt-3 text-5xl font-extrabold tracking-tight md:text-6xl">
             Full-stack security & infrastructure services
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-300">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
             One accountable partner across surveillance, access control, fire
             safety, telecom infrastructure and lifetime maintenance.
           </p>
         </div>
       </section>
 
-      {/* SERVICE LIST */}
+      {/* SERVICE LIST — alternating image rows */}
       <section className="bg-white py-20">
-        <div className="mx-auto w-full max-w-screen-2xl space-y-10 px-6">
-          {services.map((s, idx) => (
-            <div
-              key={s.title}
-              className={`grid gap-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:grid-cols-2 md:p-12 ${
-                idx % 2 === 1 ? "md:[&>div:first-child]:order-2" : ""
-              }`}
-            >
-              <div>
-                <div className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl ${s.color}`}>
-                  <s.icon className="h-8 w-8" />
+        <div className="mx-auto w-full max-w-screen-2xl space-y-24 px-6">
+          {services.map((s, idx) => {
+            const reversed = idx % 2 === 1;
+            return (
+              <div
+                key={s.title}
+                className={`grid items-center gap-10 md:grid-cols-2 md:gap-16`}
+              >
+                <div className={`relative ${reversed ? "md:order-2" : ""}`}>
+                  <div className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-primary/20 to-sky-300/10 blur-2xl" />
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    className="aspect-[4/3] w-full rounded-3xl object-cover shadow-2xl"
+                  />
+                  <div className={`absolute ${reversed ? "-right-6" : "-left-6"} -bottom-6 hidden h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-sky-600 text-white shadow-2xl md:flex`}>
+                    <s.icon className="h-11 w-11" />
+                  </div>
                 </div>
-                <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                  {s.tagline}
-                </p>
-                <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
-                  {s.title}
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-slate-600">
-                  {s.description}
-                </p>
-                <Link href="/contact">
-                  <button className="mt-6 inline-flex h-11 items-center gap-2 rounded-md bg-primary px-5 text-sm font-bold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90">
-                    Discuss Your Requirement
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </Link>
+
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                    {s.tagline}
+                  </p>
+                  <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900">
+                    {s.title}
+                  </h2>
+                  <p className="mt-5 text-base leading-relaxed text-slate-600">
+                    {s.description}
+                  </p>
+
+                  <ul className="mt-7 space-y-3">
+                    {s.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm text-slate-700">
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link href="/contact">
+                    <button className="mt-7 inline-flex h-12 items-center gap-2 rounded-md bg-gradient-to-r from-primary to-sky-600 px-6 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]">
+                      Discuss Your Requirement
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </Link>
+                </div>
               </div>
-              <div className="rounded-2xl bg-slate-50 p-7">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">What's included</p>
-                <ul className="mt-4 space-y-3">
-                  {s.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm text-slate-700">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-50 py-16">
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-5 rounded-3xl bg-gradient-to-br from-primary to-sky-600 px-8 py-12 text-center text-white shadow-xl">
-          <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
+      <section className="bg-slate-50 py-20">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-5 rounded-3xl bg-gradient-to-br from-primary to-sky-600 px-8 py-14 text-center text-white shadow-2xl shadow-primary/30">
+          <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl">
             Need a customised solution?
           </h2>
           <p className="max-w-2xl text-base text-white/90">
@@ -179,14 +193,14 @@ export default function MarketingServices() {
             architects will design a system that fits your budget and risk
             profile.
           </p>
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
             <Link href="/contact">
-              <button className="inline-flex h-12 items-center gap-2 rounded-md bg-white px-6 text-sm font-bold text-primary shadow-lg transition-colors hover:bg-slate-100">
+              <button className="inline-flex h-12 items-center gap-2 rounded-md bg-white px-7 text-sm font-bold text-primary shadow-lg transition-transform hover:scale-[1.02]">
                 Request a Quote <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
             <Link href="/portal">
-              <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-white/40 bg-white/5 px-6 text-sm font-bold text-white backdrop-blur transition-colors hover:bg-white/10">
+              <button className="inline-flex h-12 items-center gap-2 rounded-md border-2 border-white/40 bg-white/5 px-7 text-sm font-bold text-white backdrop-blur transition-colors hover:bg-white/10">
                 Existing Customer? Open Portal
               </button>
             </Link>
