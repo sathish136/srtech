@@ -20,7 +20,6 @@ export default function Installations() {
           icon={Wrench}
           title="Installations"
           description="Manage customer installation sites and AMC contracts."
-          accentClassName="from-violet-500 to-purple-700"
           actions={
             <Button>
               <Plus className="h-4 w-4" /> Add Installation

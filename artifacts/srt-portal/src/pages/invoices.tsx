@@ -28,7 +28,6 @@ export default function Invoices() {
           icon={FileText}
           title="Invoices"
           description="Manage billing and payments."
-          accentClassName="from-emerald-500 to-teal-600"
           actions={
             <Button>
               <Plus className="h-4 w-4" /> Create Invoice

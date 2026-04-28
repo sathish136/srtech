@@ -13,43 +13,25 @@ import {
   LogOut,
   Bell,
   Search,
-  Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
-type NavSection = { label: string; items: NavItem[] };
 
-const navSections: NavSection[] = [
-  {
-    label: "Overview",
-    items: [{ href: "/", label: "Dashboard", icon: LayoutDashboard }],
-  },
-  {
-    label: "Operations",
-    items: [
-      { href: "/customers", label: "Customers", icon: Users },
-      { href: "/installations", label: "Installations", icon: Wrench },
-      { href: "/tickets", label: "Tickets", icon: ClipboardList },
-      { href: "/assets", label: "Inventory", icon: Package },
-    ],
-  },
-  {
-    label: "Finance",
-    items: [{ href: "/invoices", label: "Invoices", icon: FileText }],
-  },
-  {
-    label: "Workforce",
-    items: [
-      { href: "/employees", label: "Employees", icon: UserCircle },
-      { href: "/attendance", label: "Attendance", icon: CalendarClock },
-    ],
-  },
+const navItems: NavItem[] = [
+  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/customers", label: "Customers", icon: Users },
+  { href: "/installations", label: "Installations", icon: Wrench },
+  { href: "/tickets", label: "Tickets", icon: ClipboardList },
+  { href: "/assets", label: "Inventory", icon: Package },
+  { href: "/invoices", label: "Invoices", icon: FileText },
+  { href: "/employees", label: "Employees", icon: UserCircle },
+  { href: "/attendance", label: "Attendance", icon: CalendarClock },
 ];
-
-const allItems = navSections.flatMap((s) => s.items);
 
 export function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
@@ -57,149 +39,134 @@ export function Layout({ children }: { children: ReactNode }) {
   const isItemActive = (href: string) =>
     location === href || (href !== "/" && location.startsWith(href));
 
-  const SidebarContent = () => (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
-      {/* Brand */}
-      <div className="flex h-16 items-center border-b border-sidebar-border px-5">
-        <Link href="/">
-          <div className="flex items-center gap-3 font-semibold transition-opacity hover:opacity-90">
-            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-primary to-chart-3 shadow-lg shadow-primary/30">
-              <img
-                src={import.meta.env.BASE_URL + "logo.png"}
-                alt="Sree Ram Technologies"
-                className="h-7 w-7 rounded object-contain"
-              />
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-semibold tracking-tight">Sree Ram Tech</span>
-              <span className="text-[10px] uppercase tracking-wider text-sidebar-foreground/50">
-                Control Portal
-              </span>
-            </div>
-          </div>
-        </Link>
-      </div>
-
-      {/* Nav */}
-      <div className="flex-1 overflow-y-auto py-5">
-        <nav className="flex flex-col gap-5 px-3">
-          {navSections.map((section) => (
-            <div key={section.label} className="flex flex-col gap-1">
-              <div className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/40">
-                {section.label}
-              </div>
-              {section.items.map((item) => {
-                const active = isItemActive(item.href);
-                return (
-                  <Link key={item.href} href={item.href}>
-                    <div
-                      className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
-                        active
-                          ? "bg-gradient-to-r from-primary/20 via-primary/10 to-transparent text-white"
-                          : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-white"
-                      }`}
-                    >
-                      {active && (
-                        <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-gradient-to-b from-primary to-chart-3" />
-                      )}
-                      <item.icon
-                        className={`h-4 w-4 transition-colors ${
-                          active
-                            ? "text-primary"
-                            : "text-sidebar-foreground/60 group-hover:text-white"
-                        }`}
-                      />
-                      <span className="truncate">{item.label}</span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          ))}
-        </nav>
-      </div>
-
-      {/* Pro callout + Logout */}
-      <div className="border-t border-sidebar-border p-3 space-y-2">
-        <div className="rounded-lg border border-sidebar-border bg-gradient-to-br from-primary/15 to-chart-3/10 p-3">
-          <div className="mb-1 flex items-center gap-2">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            <span className="text-xs font-semibold text-white">All systems normal</span>
-          </div>
-          <p className="text-[11px] text-sidebar-foreground/60 leading-relaxed">
-            Operations running smoothly across all modules.
-          </p>
-        </div>
-        <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-white">
-          <LogOut className="h-4 w-4" />
-          Sign out
-        </button>
-      </div>
-    </div>
-  );
-
-  const currentTitle =
-    allItems.find((item) => isItemActive(item.href))?.label || "Portal";
-
   return (
-    <div className="flex min-h-screen w-full bg-background">
-      <aside className="hidden w-64 flex-col md:flex border-r border-sidebar-border">
-        <SidebarContent />
-      </aside>
+    <div className="flex min-h-screen w-full flex-col bg-background">
+      {/* Top brand bar */}
+      <header className="sticky top-0 z-30 border-b border-border bg-card">
+        <div className="mx-auto flex h-16 w-full max-w-screen-2xl items-center gap-4 px-4 md:px-6">
+          {/* Mobile menu trigger */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-72 p-0">
+              <div className="flex h-16 items-center border-b border-border px-5">
+                <span className="text-sm font-semibold">Sree Ram Technologies</span>
+              </div>
+              <nav className="flex flex-col p-3">
+                {navItems.map((item) => {
+                  const active = isItemActive(item.href);
+                  return (
+                    <Link key={item.href} href={item.href}>
+                      <div
+                        className={cn(
+                          "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                          active
+                            ? "bg-primary/10 text-primary"
+                            : "text-foreground/70 hover:bg-muted hover:text-foreground"
+                        )}
+                      >
+                        <item.icon className="h-4 w-4" />
+                        {item.label}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </SheetContent>
+          </Sheet>
 
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b border-border bg-card/80 px-4 backdrop-blur-md md:px-6">
-          <div className="flex items-center gap-3">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-64 p-0 border-r-0">
-                <SidebarContent />
-              </SheetContent>
-            </Sheet>
-            <div className="flex items-center gap-2 text-sm">
-              <span className="hidden font-medium text-muted-foreground md:inline">
-                Portal
-              </span>
-              <span className="hidden text-muted-foreground/50 md:inline">/</span>
-              <span className="font-semibold text-foreground">{currentTitle}</span>
+          {/* Brand */}
+          <Link href="/">
+            <div className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
+              <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-md bg-primary/10">
+                <img
+                  src={import.meta.env.BASE_URL + "logo.png"}
+                  alt="Sree Ram Technologies"
+                  className="h-7 w-7 object-contain"
+                />
+              </div>
+              <div className="hidden flex-col leading-tight sm:flex">
+                <span className="text-sm font-semibold tracking-tight">
+                  Sree Ram Technologies
+                </span>
+                <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  Control Portal
+                </span>
+              </div>
             </div>
-          </div>
+          </Link>
 
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="ml-auto flex items-center gap-2 md:gap-3">
+            {/* Search */}
             <div className="relative hidden lg:block">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search anything…"
-                className="h-9 w-64 border-0 bg-muted/60 pl-9 focus-visible:ring-1 focus-visible:ring-ring"
+                placeholder="Search…"
+                className="h-9 w-56 border-border bg-muted/40 pl-9 focus-visible:bg-card focus-visible:ring-1 focus-visible:ring-ring"
               />
             </div>
+
+            {/* Bell */}
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-card" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-destructive ring-2 ring-card" />
               <span className="sr-only">Notifications</span>
             </Button>
-            <div className="flex items-center gap-2 rounded-full border border-border bg-card px-1 py-1 pr-3 shadow-sm">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-chart-3 text-sm font-semibold text-white">
+
+            {/* Avatar */}
+            <button className="flex items-center gap-2 rounded-md border border-border bg-card px-1.5 py-1 pr-2 transition-colors hover:bg-muted">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10 text-xs font-semibold text-primary">
                 AD
               </div>
-              <div className="hidden text-sm leading-tight md:block">
+              <div className="hidden text-left text-xs leading-tight sm:block">
                 <p className="font-semibold">Admin</p>
-                <p className="text-[11px] text-muted-foreground">Control Room</p>
+                <p className="text-[10px] text-muted-foreground">Control Room</p>
               </div>
-            </div>
+              <ChevronDown className="hidden h-3.5 w-3.5 text-muted-foreground sm:block" />
+            </button>
           </div>
-        </header>
+        </div>
 
-        <main className="relative flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-          <div className="mx-auto h-full w-full max-w-7xl">{children}</div>
-        </main>
-      </div>
+        {/* Desktop nav row */}
+        <nav className="hidden border-t border-border md:block">
+          <div className="mx-auto flex h-12 w-full max-w-screen-2xl items-center gap-1 overflow-x-auto px-4 md:px-6">
+            {navItems.map((item) => {
+              const active = isItemActive(item.href);
+              return (
+                <Link key={item.href} href={item.href}>
+                  <div
+                    className={cn(
+                      "relative flex h-12 items-center gap-2 px-3 text-sm font-medium transition-colors whitespace-nowrap",
+                      active
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    {item.label}
+                    {active && (
+                      <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-primary" />
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+            <button className="ml-auto flex h-9 items-center gap-2 rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <main className="flex-1 overflow-x-hidden p-4 md:p-6 lg:p-8">
+        <div className="mx-auto w-full max-w-screen-2xl">{children}</div>
+      </main>
     </div>
   );
 }

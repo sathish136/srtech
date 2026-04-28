@@ -18,7 +18,6 @@ export default function Assets() {
           icon={Package}
           title="Inventory & Assets"
           description="Manage CCTV cameras, biometrics, and other equipment."
-          accentClassName="from-cyan-500 to-blue-600"
           actions={
             <Button>
               <Plus className="h-4 w-4" /> Add Asset

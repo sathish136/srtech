@@ -20,7 +20,6 @@ export default function Customers() {
           icon={Users}
           title="Customers"
           description="Manage your client base and view their details."
-          accentClassName="from-blue-500 to-blue-700"
           actions={
             <Button>
               <Plus className="h-4 w-4" /> Add Customer
@@ -66,7 +65,7 @@ export default function Customers() {
                     <TableCell className="px-4 py-3 font-medium">
                       <Link href={`/customers/${customer.id}`}>
                         <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-chart-3/15 text-xs font-semibold text-primary">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                             {customer.name.slice(0, 2).toUpperCase()}
                           </div>
                           <span className="hover:underline">{customer.name}</span>

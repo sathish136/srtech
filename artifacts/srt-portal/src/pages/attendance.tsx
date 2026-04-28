@@ -36,7 +36,6 @@ export default function Attendance() {
           icon={CalendarClock}
           title="Attendance Log"
           description={`Track employee presence and time for ${format(new Date(), "dd MMM yyyy")}.`}
-          accentClassName="from-amber-500 to-orange-600"
         />
 
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">

@@ -58,9 +58,9 @@ export default function TicketDetail() {
         </Link>
 
         <Card className="overflow-hidden">
-          <div className="flex flex-col gap-4 border-b bg-gradient-to-br from-rose-500/8 via-card to-card p-6 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-4 border-b p-6 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 text-white shadow-md">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-rose-500/10 text-rose-600">
                 <ClipboardList className="h-6 w-6" />
               </div>
               <div>

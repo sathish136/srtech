@@ -147,12 +147,6 @@ export default function Dashboard() {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={revenue} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="revGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="hsl(217, 91%, 56%)" stopOpacity={1} />
-                        <stop offset="100%" stopColor="hsl(217, 91%, 56%)" stopOpacity={0.6} />
-                      </linearGradient>
-                    </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(220 20% 92%)" />
                     <XAxis
                       dataKey="month"
@@ -177,7 +171,7 @@ export default function Dashboard() {
                       }}
                       formatter={(value) => [`₹${value}`, "Revenue"]}
                     />
-                    <Bar dataKey="revenue" fill="url(#revGradient)" radius={[8, 8, 0, 0]} maxBarSize={48} />
+                    <Bar dataKey="revenue" fill="hsl(217, 91%, 56%)" radius={[6, 6, 0, 0]} maxBarSize={42} />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -264,7 +258,7 @@ export default function Dashboard() {
                       key={activity.id}
                       className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-muted/50"
                     >
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-chart-3/15 text-primary">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <Activity className="h-4 w-4" />
                       </div>
                       <div className="min-w-0 flex-1">

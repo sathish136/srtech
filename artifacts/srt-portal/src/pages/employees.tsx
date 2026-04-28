@@ -19,7 +19,6 @@ export default function Employees() {
           icon={UserCircle}
           title="Employees"
           description="Manage your staff, technicians, and their roles."
-          accentClassName="from-indigo-500 to-blue-700"
           actions={
             <Button>
               <Plus className="h-4 w-4" /> Add Employee
@@ -66,7 +65,7 @@ export default function Employees() {
                     <TableCell className="py-3 font-medium">
                       <Link href={`/employees/${employee.id}`}>
                         <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-blue-700/15 text-xs font-semibold text-indigo-700">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                             {employee.name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase()}
                           </div>
                           <span className="hover:underline">{employee.name}</span>

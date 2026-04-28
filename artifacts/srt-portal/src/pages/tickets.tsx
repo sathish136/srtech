@@ -48,7 +48,6 @@ export default function Tickets() {
           icon={ClipboardList}
           title="Service Tickets"
           description="Manage installation, repair, and AMC service requests."
-          accentClassName="from-rose-500 to-pink-600"
           actions={
             <Button>
               <Plus className="h-4 w-4" /> Create Ticket

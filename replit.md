@@ -17,7 +17,9 @@ A complete internal business management web app for an Indian CCTV / biometrics 
 - `artifacts/api-server/src/lib/serializers.ts` — DB row → API response normalizers (numeric→Number, Date→ISO/YYYY-MM-DD)
 - `artifacts/api-server/src/seed.ts` — Sample data seeder
 - `artifacts/srt-portal/src/pages/` — All app pages
-- `artifacts/srt-portal/src/components/layout.tsx` — Sidebar shell
+- `artifacts/srt-portal/src/components/layout.tsx` — Top-bar shell (brand row + horizontal nav with all modules; flat / no gradients)
+- `artifacts/srt-portal/src/components/page-header.tsx`, `kpi-card.tsx`, `data-toolbar.tsx` — Reusable UI primitives (flat solid-tint icon tiles, no gradients)
+- `artifacts/srt-portal/vite.config.ts` — Vite dev server proxies `/api` → `http://localhost:3001` so the SPA can call api-server in dev
 
 ## Data conventions
 - Numeric DB columns are stored as strings in pg-driver and converted to `Number` in serializers
