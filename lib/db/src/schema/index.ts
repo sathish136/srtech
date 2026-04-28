@@ -5,3 +5,5 @@ export * from "./employees";
 export * from "./tickets";
 export * from "./invoices";
 export * from "./attendance";
+export * from "./leads";
+export * from "./followups";

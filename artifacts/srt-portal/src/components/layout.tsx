@@ -14,6 +14,7 @@ import {
   Bell,
   Search,
   ChevronDown,
+  Target,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
 
 const navItems: NavItem[] = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/leads", label: "Leads / CRM", icon: Target },
   { href: "/customers", label: "Customers", icon: Users },
   { href: "/installations", label: "Installations", icon: Wrench },
   { href: "/tickets", label: "Tickets", icon: ClipboardList },

@@ -16,6 +16,8 @@ import InvoiceDetail from "@/pages/invoice-detail";
 import Employees from "@/pages/employees";
 import EmployeeDetail from "@/pages/employee-detail";
 import Attendance from "@/pages/attendance";
+import Leads from "@/pages/leads";
+import LeadDetail from "@/pages/lead-detail";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,8 @@ function Router() {
       <Route path="/employees" component={Employees} />
       <Route path="/employees/:id" component={EmployeeDetail} />
       <Route path="/attendance" component={Attendance} />
+      <Route path="/leads" component={Leads} />
+      <Route path="/leads/:id" component={LeadDetail} />
       <Route component={NotFound} />
     </Switch>
   );

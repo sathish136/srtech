@@ -17,16 +17,20 @@ A complete internal business management web app for an Indian CCTV / biometrics 
 - `artifacts/api-server/src/lib/serializers.ts` — DB row → API response normalizers (numeric→Number, Date→ISO/YYYY-MM-DD)
 - `artifacts/api-server/src/seed.ts` — Sample data seeder
 - `artifacts/srt-portal/src/pages/` — All app pages
-- `artifacts/srt-portal/src/components/layout.tsx` — Top-bar shell (brand row + horizontal nav with all modules; flat / no gradients)
+- `artifacts/srt-portal/src/components/layout.tsx` — Top-bar shell (brand row + horizontal nav with all modules; flat / no gradients). Nav items: Dashboard, Leads/CRM, Customers, Installations, Tickets, Inventory, Invoices, Employees, Attendance.
 - `artifacts/srt-portal/src/components/page-header.tsx`, `kpi-card.tsx`, `data-toolbar.tsx` — Reusable UI primitives (flat solid-tint icon tiles, no gradients)
+- `artifacts/srt-portal/src/components/followups-timeline.tsx` — Reusable activity timeline + add-follow-up form (used by ticket-detail and lead-detail). Uses TanStack Query directly via `lib/api.ts`.
+- `artifacts/srt-portal/src/lib/api.ts` — Lightweight inline fetch client for endpoints not in the OpenAPI/codegen pipeline (currently leads + followups).
 - `artifacts/srt-portal/vite.config.ts` — Vite dev server proxies `/api` → `http://localhost:3001` so the SPA can call api-server in dev
 
 ## Data conventions
 - Numeric DB columns are stored as strings in pg-driver and converted to `Number` in serializers
 - Date columns expect `YYYY-MM-DD` strings on insert; helpers in `serializers.ts` (`toDateString`, `toDateStringRequired`) convert from Zod-parsed `Date` objects
-- Tickets auto-numbered `SRT-YYYY-####`; invoices `INV-YYYY-####`
+- Tickets auto-numbered `SRT-YYYY-####`; invoices `INV-YYYY-####`; leads `LEAD-YYYY-####`
 - Tickets: `resolvedAt` auto-set when status becomes `resolved`/`closed`, cleared when reopened
 - Attendance POST upserts on (`employeeId`, `date`)
+- Followups are polymorphic: `entityType` is `"ticket"` or `"lead"`, `entityId` is the FK id. Used for the activity timeline on both tickets and leads.
+- Leads + Followups endpoints (`/leads`, `/leads/summary`, `/followups`) are NOT in the OpenAPI spec / codegen — they're hand-written Express routes consumed directly by `artifacts/srt-portal/src/lib/api.ts` and TanStack Query.
 
 ## Workflows
 - `artifacts/api-server: API Server` — Express server

@@ -8,6 +8,8 @@ import invoicesRouter from "./invoices";
 import employeesRouter from "./employees";
 import attendanceRouter from "./attendance";
 import dashboardRouter from "./dashboard";
+import leadsRouter from "./leads";
+import followupsRouter from "./followups";
 
 const router: IRouter = Router();
 
@@ -20,5 +22,7 @@ router.use(ticketsRouter);
 router.use(invoicesRouter);
 router.use(employeesRouter);
 router.use(attendanceRouter);
+router.use(leadsRouter);
+router.use(followupsRouter);
 
 export default router;
