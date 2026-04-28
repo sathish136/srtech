@@ -27,6 +27,29 @@ router.get("/installations", async (_req, res): Promise<void> => {
   );
 });
 
+router.get("/installations/:id", async (req, res): Promise<void> => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) {
+    res.status(400).json({ error: "invalid id" });
+    return;
+  }
+  const [row] = await db
+    .select({ installation: installationsTable, customer: customersTable })
+    .from(installationsTable)
+    .leftJoin(customersTable, eq(installationsTable.customerId, customersTable.id))
+    .where(eq(installationsTable.id, id));
+  if (!row) {
+    res.status(404).json({ error: "Installation not found" });
+    return;
+  }
+  res.json({
+    ...serializeInstallationRow(row.installation, row.customer?.name ?? "Unknown"),
+    customerPhone: row.customer?.phone ?? null,
+    customerCity: row.customer?.city ?? null,
+    customerAddress: row.customer?.address ?? null,
+  });
+});
+
 router.post("/installations", async (req, res): Promise<void> => {
   const parsed = CreateInstallationBody.safeParse(req.body);
   if (!parsed.success) {

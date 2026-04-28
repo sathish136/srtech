@@ -6,11 +6,37 @@ import { Button } from "@/components/ui/button";
 import { Plus, UserCircle } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import { useMemo, useState } from "react";
 
 export default function Employees() {
   const { data: employees, isLoading } = useListEmployees();
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const filtered = useMemo(() => {
+    if (!employees) return [];
+    const s = search.trim().toLowerCase();
+    return employees.filter((e) => {
+      if (roleFilter !== "all" && e.role !== roleFilter) return false;
+      if (statusFilter !== "all" && e.status !== statusFilter) return false;
+      if (!s) return true;
+      return (
+        e.name.toLowerCase().includes(s) ||
+        e.employeeCode.toLowerCase().includes(s) ||
+        (e.department ?? "").toLowerCase().includes(s)
+      );
+    });
+  }, [employees, search, roleFilter, statusFilter]);
 
   return (
     <Layout>
@@ -26,7 +52,35 @@ export default function Employees() {
           }
         />
 
-        <DataToolbar placeholder="Search employees…" />
+        <DataToolbar
+          placeholder="Search by name, code or department…"
+          value={search}
+          onChange={setSearch}
+          filters={
+            <>
+              <Select value={roleFilter} onValueChange={setRoleFilter}>
+                <SelectTrigger className="w-[150px]"><SelectValue placeholder="Role" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All roles</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="manager">Manager</SelectItem>
+                  <SelectItem value="technician">Technician</SelectItem>
+                  <SelectItem value="sales">Sales</SelectItem>
+                  <SelectItem value="support">Support</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-[150px]"><SelectValue placeholder="Status" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All statuses</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="on_leave">On Leave</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                </SelectContent>
+              </Select>
+            </>
+          }
+        />
 
         <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
           <Table>
@@ -50,14 +104,14 @@ export default function Employees() {
                     <TableCell className="py-3"><Skeleton className="h-5 w-20" /></TableCell>
                   </TableRow>
                 ))
-              ) : employees?.length === 0 ? (
+              ) : filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="py-12 text-center text-muted-foreground">
-                    No employees found.
+                    No employees match your filters.
                   </TableCell>
                 </TableRow>
               ) : (
-                employees?.map((employee) => (
+                filtered.map((employee) => (
                   <TableRow key={employee.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                     <TableCell className="px-4 py-3 font-mono text-sm text-muted-foreground">
                       {employee.employeeCode}
@@ -80,6 +134,8 @@ export default function Employees() {
                           "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
                           employee.status === "active"
                             ? "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20"
+                            : employee.status === "on_leave"
+                            ? "bg-blue-500/10 text-blue-700 ring-1 ring-blue-500/20"
                             : "bg-slate-500/10 text-slate-600 ring-1 ring-slate-500/20"
                         )}
                       >
@@ -92,6 +148,12 @@ export default function Employees() {
             </TableBody>
           </Table>
         </div>
+
+        {!isLoading && employees && (
+          <p className="text-xs text-muted-foreground">
+            Showing {filtered.length} of {employees.length} employees
+          </p>
+        )}
       </div>
     </Layout>
   );

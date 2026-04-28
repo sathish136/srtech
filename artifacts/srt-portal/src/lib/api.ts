@@ -45,7 +45,31 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+export type InstallationDetail = {
+  id: number;
+  customerId: number;
+  customerName: string;
+  siteName: string;
+  address: string;
+  installedDate: string;
+  status: string;
+  totalCameras: number;
+  amcExpiry: string | null;
+  notes: string | null;
+  createdAt: string;
+  customerPhone: string | null;
+  customerCity: string | null;
+  customerAddress: string | null;
+};
+
 export const api = {
+  getInstallation: (id: number) => request<InstallationDetail>(`/installations/${id}`),
+  updateInstallation: (id: number, body: Record<string, unknown>) =>
+    request<InstallationDetail>(`/installations/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    }),
+
   listLeads: () => request<Lead[]>("/leads"),
   getLead: (id: number) => request<Lead>(`/leads/${id}`),
   createLead: (body: Partial<Lead>) =>

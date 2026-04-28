@@ -1,9 +1,19 @@
 import { Layout } from "@/components/layout";
 import { PageHeader } from "@/components/page-header";
 import { KpiCard } from "@/components/kpi-card";
+import { DataToolbar } from "@/components/data-toolbar";
 import { useListAttendance, useGetTodayAttendanceSummary } from "@workspace/api-client-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { format } from "date-fns";
 import {
   CalendarClock,
@@ -15,6 +25,7 @@ import {
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMemo, useState } from "react";
 
 const STATUS_STYLES: Record<string, string> = {
   present: "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20",
@@ -26,8 +37,22 @@ const STATUS_STYLES: Record<string, string> = {
 
 export default function Attendance() {
   const today = format(new Date(), "yyyy-MM-dd");
+  const [date, setDate] = useState(today);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+
   const { data: summary, isLoading: isLoadingSummary } = useGetTodayAttendanceSummary();
-  const { data: attendance, isLoading: isLoadingAttendance } = useListAttendance({ date: today });
+  const { data: attendance, isLoading: isLoadingAttendance } = useListAttendance({ date });
+
+  const filtered = useMemo(() => {
+    if (!attendance) return [];
+    const s = search.trim().toLowerCase();
+    return attendance.filter((r) => {
+      if (statusFilter !== "all" && r.status !== statusFilter) return false;
+      if (!s) return true;
+      return (r.employeeName ?? "").toLowerCase().includes(s);
+    });
+  }, [attendance, search, statusFilter]);
 
   return (
     <Layout>
@@ -35,7 +60,7 @@ export default function Attendance() {
         <PageHeader
           icon={CalendarClock}
           title="Attendance Log"
-          description={`Track employee presence and time for ${format(new Date(), "dd MMM yyyy")}.`}
+          description={`Today's snapshot — ${format(new Date(), "dd MMM yyyy")}.`}
         />
 
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
@@ -46,6 +71,37 @@ export default function Attendance() {
           <KpiCard title="Half Day" value={summary?.halfDay} icon={CircleDashed} accent="violet" loading={isLoadingSummary} />
           <KpiCard title="Total" value={summary?.total} icon={Users} accent="indigo" loading={isLoadingSummary} />
         </div>
+
+        <div className="flex flex-col gap-3 rounded-xl border bg-card p-3 shadow-sm sm:flex-row sm:items-center">
+          <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-center">
+            <Label className="shrink-0 text-xs uppercase tracking-wider text-muted-foreground">View date</Label>
+            <Input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="h-10 w-full bg-muted/40 sm:max-w-[180px]"
+            />
+          </div>
+        </div>
+
+        <DataToolbar
+          placeholder="Search by employee name…"
+          value={search}
+          onChange={setSearch}
+          filters={
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All statuses</SelectItem>
+                <SelectItem value="present">Present</SelectItem>
+                <SelectItem value="absent">Absent</SelectItem>
+                <SelectItem value="late">Late</SelectItem>
+                <SelectItem value="on_leave">On Leave</SelectItem>
+                <SelectItem value="half_day">Half Day</SelectItem>
+              </SelectContent>
+            </Select>
+          }
+        />
 
         <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
           <Table>
@@ -71,14 +127,14 @@ export default function Attendance() {
                     <TableCell className="py-3"><Skeleton className="h-5 w-32" /></TableCell>
                   </TableRow>
                 ))
-              ) : attendance?.length === 0 ? (
+              ) : filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="py-12 text-center text-muted-foreground">
-                    No attendance records found for today.
+                    No attendance records for this day or filters.
                   </TableCell>
                 </TableRow>
               ) : (
-                attendance?.map((record) => (
+                filtered.map((record) => (
                   <TableRow key={record.id}>
                     <TableCell className="px-4 py-3 font-medium">{record.employeeName}</TableCell>
                     <TableCell className="py-3 text-muted-foreground">
@@ -111,6 +167,12 @@ export default function Attendance() {
             </TableBody>
           </Table>
         </div>
+
+        {!isLoadingAttendance && attendance && (
+          <p className="text-xs text-muted-foreground">
+            Showing {filtered.length} of {attendance.length} records on {format(new Date(date), "dd MMM yyyy")}
+          </p>
+        )}
       </div>
     </Layout>
   );

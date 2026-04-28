@@ -7,11 +7,36 @@ import { Plus, Users } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { format } from "date-fns";
 import { Link } from "wouter";
+import { useMemo, useState } from "react";
 
 export default function Customers() {
   const { data: customers, isLoading } = useListCustomers();
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+
+  const filtered = useMemo(() => {
+    if (!customers) return [];
+    const s = search.trim().toLowerCase();
+    return customers.filter((c) => {
+      if (typeFilter !== "all" && c.type !== typeFilter) return false;
+      if (!s) return true;
+      return (
+        c.name.toLowerCase().includes(s) ||
+        (c.contactPerson ?? "").toLowerCase().includes(s) ||
+        (c.phone ?? "").toLowerCase().includes(s) ||
+        (c.city ?? "").toLowerCase().includes(s)
+      );
+    });
+  }, [customers, search, typeFilter]);
 
   return (
     <Layout>
@@ -27,7 +52,22 @@ export default function Customers() {
           }
         />
 
-        <DataToolbar placeholder="Search customers…" />
+        <DataToolbar
+          placeholder="Search by name, contact, phone, city…"
+          value={search}
+          onChange={setSearch}
+          filters={
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-[170px]"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All types</SelectItem>
+                <SelectItem value="business">Business</SelectItem>
+                <SelectItem value="residential">Residential</SelectItem>
+                <SelectItem value="government">Government</SelectItem>
+              </SelectContent>
+            </Select>
+          }
+        />
 
         <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
           <Table>
@@ -53,14 +93,14 @@ export default function Customers() {
                     <TableCell className="py-3"><Skeleton className="h-5 w-24" /></TableCell>
                   </TableRow>
                 ))
-              ) : customers?.length === 0 ? (
+              ) : filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="py-12 text-center text-muted-foreground">
-                    No customers found. Add your first customer to get started.
+                    No customers match your filters.
                   </TableCell>
                 </TableRow>
               ) : (
-                customers?.map((customer) => (
+                filtered.map((customer) => (
                   <TableRow key={customer.id} className="cursor-pointer transition-colors hover:bg-muted/40">
                     <TableCell className="px-4 py-3 font-medium">
                       <Link href={`/customers/${customer.id}`}>
@@ -89,6 +129,12 @@ export default function Customers() {
             </TableBody>
           </Table>
         </div>
+
+        {!isLoading && customers && (
+          <p className="text-xs text-muted-foreground">
+            Showing {filtered.length} of {customers.length} customers
+          </p>
+        )}
       </div>
     </Layout>
   );

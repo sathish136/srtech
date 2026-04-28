@@ -8,7 +8,9 @@ import Dashboard from "@/pages/dashboard";
 import Customers from "@/pages/customers";
 import CustomerDetail from "@/pages/customer-detail";
 import Assets from "@/pages/assets";
+import AssetDetail from "@/pages/asset-detail";
 import Installations from "@/pages/installations";
+import InstallationDetail from "@/pages/installation-detail";
 import Tickets from "@/pages/tickets";
 import TicketDetail from "@/pages/ticket-detail";
 import Invoices from "@/pages/invoices";
@@ -28,7 +30,9 @@ function Router() {
       <Route path="/customers" component={Customers} />
       <Route path="/customers/:id" component={CustomerDetail} />
       <Route path="/assets" component={Assets} />
+      <Route path="/assets/:id" component={AssetDetail} />
       <Route path="/installations" component={Installations} />
+      <Route path="/installations/:id" component={InstallationDetail} />
       <Route path="/tickets" component={Tickets} />
       <Route path="/tickets/:id" component={TicketDetail} />
       <Route path="/invoices" component={Invoices} />

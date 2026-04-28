@@ -78,50 +78,50 @@
   --elevate-1: rgba(15, 23, 42, .04);
   --elevate-2: rgba(15, 23, 42, .08);
 
-  --background: 0 0% 99%; /* Near-white neutral canvas */
-  --foreground: 222 47% 11%;
+  --background: 215 35% 97%; /* Cool tinted canvas */
+  --foreground: 222 60% 9%;
 
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --card-border: 220 20% 92%;
+  --card-foreground: 222 60% 9%;
+  --card-border: 215 25% 89%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --popover-border: 220 20% 92%;
+  --popover-foreground: 222 60% 9%;
+  --popover-border: 215 25% 89%;
 
-  --primary: 217 91% 56%; /* Modern royal blue */
-  --primary-foreground: 210 40% 98%;
+  --primary: 220 95% 38%; /* Deep professional blue */
+  --primary-foreground: 210 40% 99%;
 
-  --secondary: 220 30% 95%;
-  --secondary-foreground: 222 47% 18%;
+  --secondary: 215 30% 94%;
+  --secondary-foreground: 222 60% 14%;
 
-  --muted: 220 25% 95%;
-  --muted-foreground: 220 12% 45%;
+  --muted: 215 30% 94%;
+  --muted-foreground: 215 18% 40%;
 
-  --accent: 217 91% 96%;
-  --accent-foreground: 217 91% 35%;
+  --accent: 220 95% 95%;
+  --accent-foreground: 220 95% 30%;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 0 84% 56%;
+  --destructive-foreground: 210 40% 99%;
 
-  --border: 220 20% 92%;
-  --input: 220 20% 92%;
-  --ring: 217 91% 56%;
+  --border: 215 25% 89%;
+  --input: 215 25% 89%;
+  --ring: 220 95% 38%;
 
-  --chart-1: 217 91% 56%;
-  --chart-2: 173 70% 42%;
-  --chart-3: 271 81% 60%;
-  --chart-4: 38 92% 55%;
-  --chart-5: 340 82% 60%;
+  --chart-1: 220 95% 38%;
+  --chart-2: 173 72% 38%;
+  --chart-3: 262 80% 56%;
+  --chart-4: 28 92% 50%;
+  --chart-5: 340 82% 56%;
 
-  --sidebar: 224 47% 12%;
-  --sidebar-foreground: 220 20% 88%;
-  --sidebar-border: 222 28% 18%;
-  --sidebar-primary: 217 91% 56%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 222 32% 18%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-ring: 217 91% 56%;
+  --sidebar: 222 60% 10%;
+  --sidebar-foreground: 215 20% 88%;
+  --sidebar-border: 222 35% 16%;
+  --sidebar-primary: 220 95% 50%;
+  --sidebar-primary-foreground: 210 40% 99%;
+  --sidebar-accent: 222 40% 16%;
+  --sidebar-accent-foreground: 210 40% 99%;
+  --sidebar-ring: 220 95% 50%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
